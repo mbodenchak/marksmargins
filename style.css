@@ -21,7 +21,8 @@ body,
 }
 
 body {
-  font-family: Inter, system-ui, Segoe UI, Roboto, Helvetica, sans-serif;
+  font-family: ui-sans-serif, system-ui, Inter, Roboto, Helvetica Neue, Arial,
+    Noto Sans, sans-serif;
   background: var(--bg);
 }
 
@@ -82,6 +83,8 @@ header {
 }
 .link {
   color: inherit;
+  text-decoration-line: none;
+  font-size: 14px;
 }
 .link:hover {
   color: var(--brand);
@@ -90,4 +93,7 @@ header {
   .nav {
     display: flex;
   }
+}
+section {
+  padding: 1.5rem 0;
 }
