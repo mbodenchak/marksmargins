@@ -192,8 +192,8 @@ header {
   max-width: 60%;
 }
 
-.main p {
-}
+/* .main p {
+} */
 
 footer {
   background-color: var(--bg);
