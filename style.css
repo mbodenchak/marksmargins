@@ -19,7 +19,6 @@ body,
 #root {
   height: 100%;
 }
-
 body {
   font-family: ui-sans-serif, system-ui, Inter, Roboto, Helvetica Neue, Arial,
     Noto Sans, sans-serif;
@@ -34,21 +33,13 @@ header {
   border-bottom: 1px solid var(--line);
   height: 70px;
 }
-
 .container {
   max-width: 1100px;
   margin: 0 auto;
   padding: 0 16px;
+  /* border: 1px solid red; */
 }
 
-.header {
-  position: sticky;
-  top: 0;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: saturate(1.2) blur(6px);
-  border-bottom: 1px solid var(--line);
-  height: 70px;
-}
 .headerInner {
   display: flex;
   align-items: center;
@@ -94,6 +85,118 @@ header {
     display: flex;
   }
 }
-section {
-  padding: 1.5rem 0;
+/* Hero */
+.hero {
+  background: #fff;
+  border-bottom: 1px solid var(--line);
+  padding: 2rem;
+}
+.heroGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 32px;
+}
+@media (min-width: 768px) {
+  .heroGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  background: #e2e8f0;
+  border: 2px solid #fff;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+}
+.heroTitle {
+  font-size: 40px;
+  line-height: 1.1;
+  margin: 8px 0 0;
+}
+.brandAccent {
+  color: var(--brand);
+}
+.heroP {
+  color: var(--muted);
+  font-size: 18px;
+  margin: 8px 0 0;
+}
+.heroBtns {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+.btn {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  text-decoration: none;
+  color: inherit;
+}
+.btnPrimary {
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: var(--brand);
+  border: 1px solid var(--brand);
+  color: #fff;
+}
+.btnPrimary:hover {
+  background: var(--brand-2);
+}
+
+/* Aside forward */
+/* Cards & lists */
+.card {
+  background: var(--brand-50);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  box-shadow: 0 6px 24px rgba(2, 6, 23, 0.08);
+  padding: 20px;
+  height: 230px;
+}
+.grid2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+@media (min-width: 768px) {
+  .grid2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.h2 {
+  font-size: 28px;
+  margin: 0 0 8px;
+}
+.h3 {
+  font-size: 20px;
+  margin: 0 0 8px;
+}
+
+.headline {
+  padding: 0.5rem 0px;
+}
+
+/* Sections */
+.main {
+  padding: 40px 0;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid var(--line);
+  padding: 2rem;
+}
+
+.main p {
+  margin: auto;
+  line-height: 2rem;
+  max-width: 60%;
+}
+
+.main p {
+}
+
+footer {
+  background-color: var(--bg);
+  height: 100px;
+  padding: 1rem;
 }
