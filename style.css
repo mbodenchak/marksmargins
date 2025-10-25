@@ -31,12 +31,10 @@ body {
 .layout-container {
   max-width: 1328px;
   margin: 0 auto;
-  padding: 1rem 0;
   background-color: var(--page);
   min-height: 100%;
   box-shadow: 5px 5px 1px rgba(0, 0, 0, 0.02), -5px -5px 1px rgba(0, 0, 0, 0.02);
 }
-
 .container {
   max-width: 1100px;
   margin: 0 auto;
@@ -44,14 +42,15 @@ body {
 }
 
 /* Header setup */
-
 header {
+  position: fixed;
   height: 50px;
   display: flex;
   align-items: stretch;
   gap: 4px;
   color: white;
-  position: relative;
+  width: 1100px;
+  top: 1rem;
 }
 
 .header__brand,
@@ -154,6 +153,57 @@ main {
   width: 100%;
 }
 
+.articleContainer {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: flex;
+}
+
+.headArticle {
+  min-width: 1328px;
+  height: 500px;
+  background-image: url("/assets/steve-johnson-_0iV9LmPDn0-unsplash.jpg");
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-end;
+  padding: 2rem;
+}
+
+.headArticle:hover {
+  cursor: pointer;
+}
+
+.headArticleCaption {
+  background: var(--bg);
+  /* min-width: 400px; */
+  /* min-height: 250px;/ */
+  bottom: 2rem;
+  left: 2rem;
+  border-radius: 6px;
+}
+.articleCard {
+  background-image: url("/assets/lee-soo-hyun-Z5cyBi5CLPg-unsplash.jpg");
+  background-size: contain;
+  border-radius: 15px;
+  height: 400px;
+  width: 300px;
+  padding: 2rem;
+  transition: box-shadow 0.2s;
+}
+.articleCard:hover,
+.headArticleTitleCard:hover {
+  box-shadow: 12px 15px 0px rgba(0, 0, 0, 0.8);
+}
+.articleCard:has(.articleMetaData):hover,
+.headArticleTitleCard:has(.articleMetaData):hover {
+  color: var(--imperialRed);
+}
+
+.articleMetaData {
+  padding: 1rem;
+  border-radius: 8px;
+}
 .article {
   display: block;
   outline: 1px solid gray;
@@ -175,12 +225,6 @@ main {
   color: var(--imperialRed);
 }
 
-.articleContainer {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 0 1rem;
-  display: flex;
-}
 .articleBody {
   padding-top: 2rem;
   line-height: 2rem;
