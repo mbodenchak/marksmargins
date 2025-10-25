@@ -89,7 +89,66 @@
           </div>
         </section>
       </main>
-      <footer>Footer</footer>
+      <footer class="site-footer">
+        <div class="container footer-grid">
+          <div class="footer-brand">
+            <h3 class="footer-logo">Mark’s Margins</h3>
+            <p class="footer-blurb">
+              Notes in the margins about law, tech, and the craft of learning.
+            </p>
+          </div>
+
+          <nav class="footer-links" aria-label="Quick links">
+            <a href="#">About</a>
+            <a href="#">Paralegal</a>
+            <a href="#">Tech</a>
+            <a href="#">Musings</a>
+            <a href="#">Contact</a>
+          </nav>
+
+          <form class="footer-news" action="#" method="post">
+            <label for="news-email" class="footer-label">Get new posts</label>
+            <div class="footer-input-wrap">
+              <input
+                id="news-email"
+                name="email"
+                type="email"
+                placeholder="you@example.com"
+                required
+              />
+              <button type="submit">Subscribe</button>
+            </div>
+            <small class="footer-note">No spam. Unsubscribe any time.</small>
+          </form>
+        </div>
+
+        <div class="footer-bottom">
+          <div class="container footer-bottom-inner">
+            <small>© <span id="year"></span> Mark’s Margins</small>
+            <div class="footer-social" aria-label="Social">
+              <a href="#" aria-label="RSS"><i class="fa-solid fa-rss"></i></a>
+              <a href="www.github.com/mbodenchak" aria-label="GitHub"
+                ><i class="fa-brands fa-github"></i
+              ></a>
+              <a
+                href="https://www.linkedin.com/in/mbodenchak"
+                aria-label="LinkedIn"
+                ><i class="fa-brands fa-linkedin"></i
+              ></a>
+            </div>
+            <a href="#" class="back-to-top">Back to top ↑</a>
+          </div>
+        </div>
+      </footer>
     </div>
+    <script>
+      document.getElementById("year").textContent = new Date().getFullYear();
+      document.querySelectorAll(".back-to-top").forEach((el) => {
+        el.addEventListener("click", (e) => {
+          e.preventDefault();
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+      });
+    </script>
   </body>
 </html>
