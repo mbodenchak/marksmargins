@@ -18,7 +18,7 @@
       <article class="headArticle">
         <div class="headArticleTitleCard">
           <div class="headArticleCaption">
-             <div class="articleMetaData">
+            <div class="articleMetaData">
               <h1 class="articleTitle">Article Title</h1>
               <h3 class="articleDate">Oct 24, 2025</h3>
             </div>
@@ -38,40 +38,55 @@
             <a href="" class="header__nav-navlink">Tech</a>
             <a href="" class="header__nav-navlink">Musings</a>
           </nav>
-          <!-- <div class="header__search" id="search">
-            <button
-              class="header__search-button"
-              aria-label="Open search"
-              id="search-button"
-            >
-              <i class="fa-solid fa-magnifying-glass"></i>
-            </button>
-            <input
-              class="header__search-input"
-              id="search-input"
-              type="search"
-              placeholder="Search…"
-              aria-label="Search"
-            />
-            <button
-              class="header__search-close"
-              id="search-close"
-              aria-label="Close search"
-            >
-              <i class="fa-solid fa-xmark"></i>
-            </button>
-          </div> -->
         </header>
       </div>
       <main class="main">
         <section class="articles">
-          <div class="articleContainer">
-          <article class="articleCard">
-            <div class="articleMetaData">
-              <h1 class="articleTitle">Article Title</h1>
-              <h3 class="articleDate">Oct 24, 2025</h3>
+          <div class="articleGrid">
+            <!-- Row 1: narrow left, wide right -->
+            <div class="row">
+              <article class="articleCard card--narrow">
+                <div class="articleMetaData">
+                  <h1 class="articleTitle">Article Title A</h1>
+                  <h3 class="articleDate">Oct 24, 2025</h3>
+                </div>
+              </article>
+
+              <article class="articleCard card--wide">
+                <div class="articleMetaData">
+                  <h1 class="articleTitle">Article Title B</h1>
+                  <h3 class="articleDate">Oct 24, 2025</h3>
+                </div>
+              </article>
             </div>
+
+            <!-- Row 2: wide left, narrow right -->
+            <div class="row row--reverse">
+              <article class="articleCard card--wide">
+                <div class="articleMetaData">
+                  <h1 class="articleTitle">Article Title C</h1>
+                  <h3 class="articleDate">Oct 24, 2025</h3>
+                </div>
+              </article>
+
+              <article class="articleCard card--narrow">
+                <div class="articleMetaData">
+                  <h1 class="articleTitle">Article Title D</h1>
+                  <h3 class="articleDate">Oct 24, 2025</h3>
+                </div>
+              </article>
             </div>
+
+            <!-- Row 3: full width -->
+            <div class="row row--full">
+              <article class="articleCard card--full">
+                <div class="articleMetaData">
+                  <h1 class="articleTitle">Article Title E</h1>
+                  <h3 class="articleDate">Oct 24, 2025</h3>
+                </div>
+              </article>
+            </div>
+          </div>
         </section>
       </main>
       <footer>Footer</footer>

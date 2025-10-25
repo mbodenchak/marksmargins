@@ -19,6 +19,11 @@
   padding: 0;
   margin: 0;
 }
+:root {
+  --row-gap: 4rem;
+  --col-gap: 4rem;
+  --narrow-w: 300px;
+}
 
 html,
 body,
@@ -56,6 +61,7 @@ body {
   color: white;
   width: 1100px;
   border-radius: 999px;
+  z-index: 30;
 }
 
 .header__brand,
@@ -186,20 +192,21 @@ body {
 
 .articleCard {
   background-image: url("/assets/lee-soo-hyun-Z5cyBi5CLPg-unsplash.jpg");
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
   border-radius: 16px;
-  height: 400px;
+  min-height: 320px;
+  /* height: 400px; */
   width: 300px;
   padding: 2rem;
-  box-shadow: 10px 12px 0 rgba(9, 33, 49, 0.8);
+  /* box-shadow: 10px 12px 0 rgba(9, 33, 49, 0.8); */
   transition: transform 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
 }
 
 .articleCard:hover {
   transform: translate(-2px, -2px) rotate(-0.25deg);
-  box-shadow: 14px 16px 0 rgba(9, 33, 49, 0.85);
+  box-shadow: 7px 8px 0 rgba(9, 33, 49, 0.85);
 }
 .articleMetaData {
   background: rgba(244, 250, 255, 0.9);
@@ -215,4 +222,49 @@ body {
 main {
   padding: 2rem 0;
   width: 100%;
+}
+
+.articleGrid {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  display: grid;
+  gap: var(--row-gap);
+}
+
+.row {
+  display: grid;
+  grid-template-columns: var(--narrow-w) 1fr;
+  gap: var(--col-gap);
+  align-items: stretch;
+}
+
+.row--reverse {
+  grid-template-columns: 1fr var(--narrow-w);
+}
+
+.row--full {
+  grid-template-columns: 1fr;
+}
+
+.card--narrow {
+  width: 100%;
+}
+.card--wide {
+  width: 100%;
+}
+.card--full {
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  min-height: 500px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.row .articleCard {
+  display: flex;
+}
+
+.row .articleMetaData {
+  margin-top: auto;
 }
