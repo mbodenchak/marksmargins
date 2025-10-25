@@ -1,0 +1,24 @@
+.article {
+  display: block;
+  outline: 1px solid gray;
+  margin: auto;
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: 12px 15px 0px rgba(0, 0, 0, 0.8);
+}
+
+.initialParagraph:first-letter {
+  font-size: 4rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.articleBody {
+  padding-top: 2rem;
+  line-height: 2rem;
+  text-indent: 2rem;
+}
+
+.articleBody > p {
+  padding: 0.25rem 0;
+}
