@@ -5,64 +5,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mark's Margins</title>
     <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
   <body>
-    <header class="header">
-      <div class="container headerInner">
-        <a class="brand" href="#">
-          <div class="badge">MB</div>
-          <span class="brandText">Mark's Margins</span>
-        </a>
-        <nav class="nav">
-          <a href="1" class="link">Home</a>
-          <a href="2" class="link">About</a>
-          <a href="3" class="link">Posts</a>
-          <a href="3" class="link">Contact</a>
-        </nav>
-      </div>
-    </header>
-    <section class="hero">
-      <div class="container heroGrid">
-        <div class="intro">
-          <!-- Intro -->
-          <div class="avatar">
-            <!-- circle profile -->
-          </div>
-          <h1 class="heroTitle">I am <span class="brandAccent">Mark Bodenchak</span></h1>
-          <p class="heroP">
-            Here is a simple blog that I use to write about various interests of mine, including paralegal studies, computer science, humanities,
-            and other miscellaneous topics.
-          </p>
-          <div class="heroBtns">
-            <a class="btnPrimary" href="#/posts">Contact Me</a>
-            <a class="btn" href="#/about">About Me</a>
-          </div>
-        </div>
-        <aside class="card">
-          <!-- How it works section -->
-          <h3 class="h3">Headlines</h3>
-          <div class="headline">
-            <h4>Snippet Post</h4>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, dolor.
-            </p>
-          </div>
-          <div class="headline">
-            <h4>Snippet Post</h4>
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima, dolor.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-    <main class="main">
-      <div class="container"><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Molestias ipsum mollitia atque voluptas iure ipsa! Illo ipsum quisquam commodi qui facilis dolorum quo repellat rem! Deserunt repellat sequi quis ut corporis magnam mollitia fuga, vero ducimus consequuntur magni odit perspiciatis, cum alias ullam officiis fugiat recusandae! Natus vero reprehenderit, vel incidunt similique ipsa ipsum error quisquam delectus minima. Tenetur labore in quod nulla eaque minima ipsa illum veniam repellendus autem! Asperiores exercitationem facilis veritatis! Fugiat mollitia aspernatur culpa. Labore fuga aut ratione incidunt necessitatibus, harum neque tempora velit porro dicta numquam laborum possimus, consectetur iure vitae soluta esse nemo qui.</p></div>
-    </main>
-    <footer>
+    <div class="layout-container">
       <div class="container">
-        <div>2025 Mark Bodenchak</div>
+        <header class="header__header" id="site-header">
+          <div class="header__brand">
+            <span class="header__brandText"
+              ><a href="index.html">Mark's<br />Margins</a></span
+            >
+          </div>
+          <nav class="header__nav" id="site-nav">
+            <a href="" class="header__nav-navlink">About Mark</a>
+            <a href="" class="header__nav-navlink">Paralegal</a>
+            <a href="" class="header__nav-navlink">Tech</a>
+            <a href="" class="header__nav-navlink">Musings</a>
+          </nav>
+          <!-- <div class="header__search" id="search">
+            <button
+              class="header__search-button"
+              aria-label="Open search"
+              id="search-button"
+            >
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+            <input
+              class="header__search-input"
+              id="search-input"
+              type="search"
+              placeholder="Search…"
+              aria-label="Search"
+            />
+            <button
+              class="header__search-close"
+              id="search-close"
+              aria-label="Close search"
+            >
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div> -->
+        </header>
       </div>
-    </footer>
+      <main class="main">
+        <section class="articles">
+          <div class="articleContainer">
+         
+        </section>
+      </main>
+      <footer>Footer</footer>
+    </div>
   </body>
 </html>
