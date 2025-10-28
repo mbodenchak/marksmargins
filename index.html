@@ -5,150 +5,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mark's Margins</title>
     <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
   </head>
   <body>
-    <div class="layout-container">
-      <article class="headArticle">
-        <div class="headArticleTitleCard">
-          <div class="headArticleCaption">
-            <div class="articleMetaData">
-              <h1 class="articleTitle">Article Title</h1>
-              <h3 class="articleDate">Oct 24, 2025</h3>
-            </div>
-          </div>
-        </div>
-      </article>
-      <div class="container">
-        <header class="header__header" id="site-header">
-          <div class="header__brand">
-            <span class="header__brandText"
-              ><a href="index.html">Mark's<br />Margins</a></span
-            >
-          </div>
-          <nav class="header__nav" id="site-nav">
-            <a href="" class="header__nav-navlink">About Mark</a>
-            <a href="" class="header__nav-navlink">Paralegal</a>
-            <a href="" class="header__nav-navlink">Tech</a>
-            <a href="" class="header__nav-navlink">Musings</a>
-          </nav>
-        </header>
+    <header>
+      <div class="brand">Mark's<span class="dot">•</span>Margins</div>
+      <div class="search" role="search">
+        <svg
+          class="icon"
+          width="16"
+          height="16"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input id="q" placeholder="Search pages, articles, tags..." />
+        <span class="kbd">/</span>
       </div>
-      <main class="main">
-        <section class="articles">
-          <div class="articleGrid">
-            <!-- Row 1: narrow left, wide right -->
-            <div class="row">
-              <article class="articleCard card--narrow">
-                <div class="articleMetaData">
-                  <h1 class="articleTitle">Article Title A</h1>
-                  <h3 class="articleDate">Oct 24, 2025</h3>
-                </div>
-              </article>
-
-              <article class="articleCard card--wide">
-                <div class="articleMetaData">
-                  <h1 class="articleTitle">Article Title B</h1>
-                  <h3 class="articleDate">Oct 24, 2025</h3>
-                </div>
-              </article>
-            </div>
-
-            <!-- Row 2: wide left, narrow right -->
-            <div class="row row--reverse">
-              <article class="articleCard card--wide">
-                <div class="articleMetaData">
-                  <h1 class="articleTitle">Article Title C</h1>
-                  <h3 class="articleDate">Oct 24, 2025</h3>
-                </div>
-              </article>
-
-              <article class="articleCard card--narrow">
-                <div class="articleMetaData">
-                  <h1 class="articleTitle">Article Title D</h1>
-                  <h3 class="articleDate">Oct 24, 2025</h3>
-                </div>
-              </article>
-            </div>
-
-            <!-- Row 3: full width -->
-            <div class="row row--full">
-              <article class="articleCard card--full">
-                <div class="articleMetaData">
-                  <h1 class="articleTitle">Article Title E</h1>
-                  <h3 class="articleDate">Oct 24, 2025</h3>
-                </div>
-              </article>
-            </div>
-          </div>
-        </section>
-      </main>
-      <footer class="site-footer">
-        <div class="container footer-grid">
-          <div class="footer-brand">
-            <h3 class="footer-logo">Mark’s Margins</h3>
-            <p class="footer-blurb">
-              Notes in the margins about law, tech, and the craft of learning.
-            </p>
-          </div>
-
-          <nav class="footer-links" aria-label="Quick links">
-            <a href="#">About</a>
-            <a href="#">Paralegal</a>
-            <a href="#">Tech</a>
-            <a href="#">Musings</a>
-            <a href="#">Contact</a>
-          </nav>
-
-          <form class="footer-news" action="#" method="post">
-            <label for="news-email" class="footer-label">Get new posts</label>
-            <div class="footer-input-wrap">
-              <input
-                id="news-email"
-                name="email"
-                type="email"
-                placeholder="you@example.com"
-                required
-              />
-              <button type="submit">Subscribe</button>
-            </div>
-            <small class="footer-note">No spam. Unsubscribe any time.</small>
-          </form>
-        </div>
-
-        <div class="footer-bottom">
-          <div class="container footer-bottom-inner">
-            <small>© <span id="year"></span> Mark’s Margins</small>
-            <div class="footer-social" aria-label="Social">
-              <a href="#" aria-label="RSS"><i class="fa-solid fa-rss"></i></a>
-              <a href="www.github.com/mbodenchak" aria-label="GitHub"
-                ><i class="fa-brands fa-github"></i
-              ></a>
-              <a
-                href="https://www.linkedin.com/in/mbodenchak"
-                aria-label="LinkedIn"
-                ><i class="fa-brands fa-linkedin"></i
-              ></a>
-            </div>
-            <a href="#" class="back-to-top">Back to top ↑</a>
-          </div>
-        </div>
-      </footer>
-    </div>
-    <script>
-      document.getElementById("year").textContent = new Date().getFullYear();
-      document.querySelectorAll(".back-to-top").forEach((el) => {
-        el.addEventListener("click", (e) => {
-          e.preventDefault();
-          window.scrollTo({ top: 0, behavior: "smooth" });
-        });
-      });
-    </script>
+      <div class="top-actions">
+        <button id="themeBtn" class="btn">Toggle theme</button>
+      </div>
+    </header>
   </body>
 </html>
