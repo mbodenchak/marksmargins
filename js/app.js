@@ -40,9 +40,9 @@ const seed = {
   pages: [
     { id: "dashboard", title: "Home", type: "system" },
     { id: "articles", title: "Articles" },
-    { id: "notes", title: "Notes" },
+    // { id: "notes", title: "Notes" },
     { id: "resume", title: "Resume" },
-    { id: "projects", title: "Projects" },
+    // { id: "projects", title: "Projects" },
     { id: "about", title: "About" },
   ],
   blocks: {
