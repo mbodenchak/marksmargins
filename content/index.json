@@ -6,5 +6,13 @@
     "tags": ["ip", "trademarks", "article"],
     "summary": "What counts as a nontraditional mark and why functionality and distinctiveness matter.",
     "draft": false
+  },
+  {
+    "slug": "markdown-showcase",
+    "title": "Markdown Showcase: A Living Demo",
+    "date": "2025-10-28",
+    "tags": ["demo", "markdown", "guide"],
+    "summary": "A compact article that demonstrates headings, emphasis, links, lists, code blocks, and site-specific wiki links.",
+    "draft": false
   }
 ]

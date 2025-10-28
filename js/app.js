@@ -519,6 +519,21 @@ async function renderArticleDetail(articleId) {
       </div>
     </article>`;
 
+  if (window.hljs) {
+    document
+      .querySelectorAll("#articleBody pre code")
+      .forEach((el) => hljs.highlightElement(el));
+  }
+
+  if (window.mediumZoom) {
+    mediumZoom("#articleBody img.zoomable", {
+      background:
+        getComputedStyle(document.documentElement)
+          .getPropertyValue("--bg")
+          .trim() || "rgba(0,0,0,0.85)",
+    });
+  }
+
   const copyBtn = document.getElementById("copyLinkBtn");
   if (copyBtn)
     copyBtn.onclick = () => {
@@ -883,76 +898,64 @@ document.getElementById("exportRss")?.addEventListener("click", () => {
 /***********************
  * Markdown renderer
  ***********************/
+if (window.marked) {
+  // Core options
+  marked.setOptions({
+    gfm: true, // tables, task lists
+    breaks: false, // keep normal paragraphs
+    headerIds: false, // cleaner headings
+    mangle: false, // do not mangle emails
+  });
+
+  // Syntax highlight if hljs is present
+  if (window.hljs) {
+    marked.setOptions({
+      highlight: (code, lang) => {
+        try {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(code, {
+              language: lang,
+              ignoreIllegals: true,
+            }).value;
+          }
+          return hljs.highlightAuto(code).value;
+        } catch {
+          return code;
+        }
+      },
+    });
+  }
+
+  // Image rendering: figure + caption + lazy loading
+  marked.use({
+    renderer: {
+      image({ href, title, text }) {
+        // allow relative paths like "images/desk.jpg" in your MD
+        // and auto-prefix with "content/" since the page lives at the site root
+        let src = href || "";
+        if (src && !/^https?:\/\//i.test(src) && !src.startsWith("/")) {
+          src = `content/${src}`; // e.g. "images/foo.jpg" -> "content/images/foo.jpg"
+        }
+
+        const alt = text || "";
+        const cap = title || ""; // markdown title becomes caption
+        const img = `<img src="${src}"
+                         alt="${String(alt).replace(/"/g, "&quot;")}"
+                         loading="lazy"
+                         decoding="async"
+                         class="article-img zoomable">`;
+
+        return cap
+          ? `<figure class="article-figure">${img}<figcaption>${cap}</figcaption></figure>`
+          : img;
+      },
+    },
+  });
+}
+
 function renderMarkdown(src) {
-  if (!src) return "";
-  let s = String(src).replace(
-    /[&<>]/g,
-    (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c])
-  );
-  const fences = [];
-  s = s.replace(/```([\s\S]*?)```/g, (_, code) => {
-    fences.push(code);
-    return `§§FENCE${fences.length - 1}§§`;
-  });
-  const inlines = [];
-  s = s.replace(/`([^`]+)`/g, (_, code) => {
-    inlines.push(code);
-    return `§§INLINE${inlines.length - 1}§§`;
-  });
-  s = s
-    .replace(/^######\s+(.+)$/gm, "<h6>$1</h6>")
-    .replace(/^#####\s+(.+)$/gm, "<h5>$1</h5>")
-    .replace(/^####\s+(.+)$/gm, "<h4>$1</h4>")
-    .replace(/^###\s+(.+)$/gm, "<h3>$1</h3>")
-    .replace(/^##\s+(.+)$/gm, "<h2>$1</h2>")
-    .replace(/^#\s+(.+)$/gm, "<h1>$1</h1>");
-  s = s.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
-  s = s.replace(/\*(.+?)\*/g, "<em>$1</em>");
-  s = s.replace(
-    /\[([^\]]+)\]\(([^)\s]+)\)/g,
-    (m, t, u) => `<a class="link" href="${u}">${t}</a>`
-  );
-  s = s
-    .split(/\n\n+/)
-    .map((block) => {
-      if (/^(?:\s*[-*+]\s)/m.test(block)) {
-        const items = block
-          .split(/\n/)
-          .filter(Boolean)
-          .map((l) => l.replace(/^\s*[-*+]\s+/, ""))
-          .map((it) => `<li>${it}</li>`)
-          .join("");
-        return `<ul>${items}</ul>`;
-      }
-      if (/^(?:\s*\d+\.\s)/m.test(block)) {
-        const items = block
-          .split(/\n/)
-          .filter(Boolean)
-          .map((l) => l.replace(/^\s*\d+\.\s+/, ""))
-          .map((it) => `<li>${it}</li>`)
-          .join("");
-        return `<ol>${items}</ol>`;
-      }
-      return `<p>${block}</p>`;
-    })
-    .join("\n");
-  s = s.replace(
-    /§§INLINE(\d+)§§/g,
-    (_, i) =>
-      `<code>${inlines[+i].replace(
-        /[&<>]/g,
-        (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c])
-      )}</code>`
-  );
-  s = s.replace(
-    /§§FENCE(\d+)§§/g,
-    (_, i) =>
-      `<pre><code>${fences[+i].replace(
-        /[&<>]/g,
-        (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c])
-      )}</code></pre>`
-  );
-  return s;
+  const md = src || "";
+  return window.marked ? marked.parse(md) : md;
 }
 
 /***********************
