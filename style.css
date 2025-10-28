@@ -48,3 +48,51 @@ header {
   top: 0;
   z-index: 10;
 }
+
+.brand {
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  user-select: none;
+}
+.brand .dot {
+  color: var(--accent);
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--panel);
+  padding: 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  flex: 1;
+  max-width: 920px;
+  box-shadow: 0 1px 0 var(--shadow) inset;
+}
+.search input {
+  flex: 1;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: var(--text);
+}
+.icon {
+  opacity: 0.85;
+}
+
+.top-actions {
+  display: flex;
+  gap: 8px;
+}
+.btn {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+.btn:hover {
+  filter: brightness(1.05);
+}
