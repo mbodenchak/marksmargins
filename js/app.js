@@ -216,9 +216,9 @@ async function ensureArticleBody(art) {
 const routes = {
   dashboard: renderDashboard,
   articles: renderArticles,
-  notes: renderNotes,
+  // notes: renderNotes,
   resume: renderResume,
-  projects: renderProjects,
+  // projects: renderProjects,
   about: renderAbout,
 };
 
