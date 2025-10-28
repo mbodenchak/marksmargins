@@ -135,3 +135,26 @@ aside.left {
   background: var(--panel);
   border: 1px solid var(--border);
 }
+/* main */
+main {
+  grid-area: main;
+  padding: 18px 22px 90px;
+  overflow: auto;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+.breadcrumbs {
+  color: var(--muted);
+  font-size: 12px;
+}
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
