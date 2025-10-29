@@ -220,6 +220,7 @@ main {
   border-radius: 12px;
   padding: 14px;
   box-shadow: 0 6px 18px var(--shadow);
+  margin: 0.5rem 0;
 }
 
 .grid {
