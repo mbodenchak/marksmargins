@@ -1,9 +1,10 @@
 {
   "title": "Mark's Margins",
-  "tagline": "Notes on CS, paralegal work, humanities, and assorted musings.",
+  "tagline": "Some important links to get to know Mark Bodenchak better:",
   "links": [
     { "label": "Email", "href": "mailto:mbodenchak@gmail.com" },
-    { "label": "GitHub", "href": "https://github.com/mbodenchak" },
-    { "label": "LinkedIn", "href": "https://www.linkedin.com/in/mbodenchak" }
+    { "label": "Resume", "href": "#/resume" },
+    { "label": "LinkedIn", "href": "https://www.linkedin.com/in/mbodenchak" },
+    { "label": "GitHub", "href": "https://github.com/mbodenchak" }
   ]
 }
