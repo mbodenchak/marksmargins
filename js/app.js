@@ -71,7 +71,6 @@ async function loadCoreContent() {
 
   const blocks = {};
   blocks.dashboard = await loadJsonSafe("content/blocks/dashboard.json", []);
-  blocks.notes = await loadJsonSafe("content/blocks/notes.json", []);
   blocks.resume = await loadJsonSafe("content/blocks/resume.json", []);
   blocks.projects = await loadJsonSafe("content/blocks/projects.json", []);
 
@@ -129,7 +128,6 @@ async function ensureArticleBody(art) {
 const routes = {
   dashboard: renderDashboard,
   articles: renderArticles,
-  notes: renderNotes,
   resume: renderResume,
   projects: renderProjects,
   about: renderAbout,
@@ -337,17 +335,7 @@ function articleCard(b) {
     }
     <div style="display:flex; gap:8px; flex-wrap:wrap;">
       <a class="btn link" href="#/a/${encodeURIComponent(b.slug)}">Open</a>
-      <button class="btn" data-add="notes">Save to Notes</button>
     </div>`;
-  el.querySelector("[data-add]")?.addEventListener("click", () => {
-    state.blocks.notes = state.blocks.notes || [];
-    state.blocks.notes.unshift({
-      text: `Saved: ${b.text}`,
-      tags: ["saved", "article"],
-    });
-    persist();
-    route();
-  });
   return el;
 }
 
@@ -493,14 +481,8 @@ function renderAbout() {
 }
 
 /************************
- * Notes/Resume/Projects
+ * Resume/Projects
  ************************/
-function renderNotes() {
-  const v = byId("view");
-  setMeta({ title: "Notes — Mark's Margins", description: "Notes and lists" });
-  v.innerHTML = `<div id="notesRoot"></div>`;
-  mountBlocks("notesRoot", state.blocks.notes);
-}
 function renderResume() {
   const items = state.blocks.resume || [];
   const v = byId("view");
@@ -513,7 +495,7 @@ function renderResume() {
     <section class="card">
       <div class="resume-toolbar">
         <div class="block-title" style="margin:0;">Resume</div>
-        <div><button class="btn no-print" id="printResumeBtn" title="Print a one-page PDF">Print résumé</button></div>
+        <div><button class="btn no-print" id="printResumeBtn" title="Print a one-page PDF">Print resume</button></div>
       </div>
       <div class="resume" id="resume"></div>
     </section>`;
@@ -867,7 +849,7 @@ function buildRssXml() {
   const channel = {
     title: "Mark's Margins",
     link: base,
-    description: state.profile?.tagline || "Articles and notes",
+    description: state.profile?.tagline || "Articles from MCB",
   };
   return `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0"><channel>
