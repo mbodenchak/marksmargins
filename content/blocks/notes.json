@@ -1,0 +1,16 @@
+[
+  {
+    "text": "Ideas inbox",
+    "children": [
+      { "text": "Backlinks graph prototype", "tags": ["idea"] },
+      { "text": "CLI to parse USPTO data to JSON", "tags": ["node", "ip"] }
+    ]
+  },
+  {
+    "text": "Reading list",
+    "children": [
+      { "text": "The Coming Wave, notes on governance", "tags": ["reading"] },
+      { "text": "Discrete Math prep plan", "tags": ["math", "study"] }
+    ]
+  }
+]

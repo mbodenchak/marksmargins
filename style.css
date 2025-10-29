@@ -181,6 +181,13 @@ aside.right {
   border: 1px solid var(--border);
   margin: 2px;
   font-size: 12px;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.tag:hover {
+  filter: brightness(1.4);
+  text-decoration: none;
 }
 
 /* Main */
@@ -244,6 +251,10 @@ main {
 .meta {
   color: var(--muted);
   font-size: 12px;
+}
+a {
+  text-decoration: none;
+  color: var(--link);
 }
 .link {
   color: var(--link);

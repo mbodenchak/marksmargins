@@ -1,0 +1,15 @@
+[
+  {
+    "text": "Welcome to Mark’s Margins. Capture notes, publish articles, and keep your resume handy.",
+    "tags": ["start"],
+    "children": []
+  },
+  {
+    "text": "Quick links",
+    "children": [
+      { "text": "See [[Articles]]" },
+      { "text": "Review [[Resume]]" },
+      { "text": "Capture ideas in [[Notes]]" }
+    ]
+  }
+]

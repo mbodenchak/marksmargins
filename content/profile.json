@@ -1,0 +1,9 @@
+{
+  "title": "Mark's Margins",
+  "tagline": "Notes on CS, paralegal work, humanities, and assorted musings.",
+  "links": [
+    { "label": "Email", "href": "mailto:mbodenchak@gmail.com" },
+    { "label": "GitHub", "href": "https://github.com/mbodenchak" },
+    { "label": "LinkedIn", "href": "https://www.linkedin.com/in/mbodenchak" }
+  ]
+}

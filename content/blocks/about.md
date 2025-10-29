@@ -1,0 +1,1 @@
+Hi, I’m Mark. I write about computer science, paralegal work, and the humanities. This site is a notebook and a portfolio.

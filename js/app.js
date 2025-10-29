@@ -1,12 +1,13 @@
 /* --------------------------------------------------
-   Mark's Margins — app.js (Static Markdown Edition)
-   - Articles from /content/index.json + /content/articles/*.md
-   - LocalStorage for preferences + cache
-   - Slugs, SEO, Sitemap/RSS, Print Resume, Theme toggle
+   Mark's Margins — app.js (Externalized Content Edition)
+   - Loads profile/pages/blocks from /content/
+   - Loads articles index + bodies from /content/articles/
+   - Tag links -> #/tag/<tag>
+   - Theme toggle, Search, SEO, Sitemap/RSS, Resume print
 -------------------------------------------------- */
 
 /**********************
- * Simple client store
+ * Local store
  **********************/
 const Store = {
   key: "logseq_like_site_v1",
@@ -22,146 +23,19 @@ const Store = {
   },
 };
 
-/*******************
- * Seed data model
- *******************/
-const seed = {
+/**********************
+ * Defaults (tiny)
+ **********************/
+const defaults = {
   theme: "dark",
   ui: { showDrafts: false },
-  profile: {
-    title: "Mark's Margins",
-    tagline: "Notes on CS, paralegal work, humanities, and assorted musings.",
-    links: [
-      { label: "Email", href: "mailto:you@example.com" },
-      { label: "GitHub", href: "https://github.com/yourname" },
-      { label: "LinkedIn", href: "https://www.linkedin.com/in/yourname" },
-    ],
-  },
-  pages: [
-    { id: "dashboard", title: "Home", type: "system" },
-    { id: "articles", title: "Articles" },
-    // { id: "notes", title: "Notes" },
-    { id: "resume", title: "Resume" },
-    // { id: "projects", title: "Projects" },
-    { id: "about", title: "About" },
-  ],
-  blocks: {
-    dashboard: [
-      {
-        text: "Welcome to Mark’s Margins. Capture notes, publish articles, and keep your resume handy.",
-        tags: ["start"],
-        children: [],
-      },
-      {
-        text: "Quick links",
-        children: [
-          { text: "See [[Articles]]" },
-          { text: "Review [[Resume]]" },
-          { text: "Capture ideas in [[Notes]]" },
-        ],
-      },
-    ],
-    // ARTICLES WILL BE LOADED FROM /content AT RUNTIME
-    articles: [],
-    notes: [
-      {
-        text: "Ideas inbox",
-        children: [
-          { text: "Backlinks graph prototype", tags: ["idea"] },
-          { text: "CLI to parse USPTO data to JSON", tags: ["node", "ip"] },
-        ],
-      },
-      {
-        text: "Reading list",
-        children: [
-          { text: "The Coming Wave, notes on governance", tags: ["reading"] },
-          { text: "Discrete Math prep plan", tags: ["math", "study"] },
-        ],
-      },
-    ],
-    resume: [
-      {
-        text: "IP Paralegal Intern — Binderow Law Office",
-        meta: "Jun–Aug 2025",
-        children: [
-          {
-            text: "Created a 2027 trademark maintenance schedule; automated future schedules with a program to save time.",
-          },
-          {
-            text: "Researched & analyzed Office action refusals under §§2(d), 2(e); identified response strategies from prior filings.",
-          },
-          {
-            text: "Performed USPTO TESS clearance searches; complemented with generative-AI regex prompts.",
-          },
-        ],
-      },
-      {
-        text: "Freelance Web Developer & Consultant — Various Clients",
-        meta: "Nov 2022–May 2025",
-        children: [
-          {
-            text: "Delivered secure, process oriented solutions; confidentiality under NDAs.",
-          },
-          {
-            text: "Organized records, invoices, project files; produced technical documentation.",
-          },
-        ],
-      },
-    ],
-    projects: [
-      {
-        text: "Single User Dungeon in JS",
-        tags: ["javascript", "game"],
-        children: [{ text: "Map system and random events." }],
-      },
-      {
-        text: "Moving App with Mongoose",
-        tags: ["node", "mongodb"],
-        children: [],
-      },
-    ],
-    about: [
-      {
-        text: "Hi, I’m Mark. I write about computer science, paralegal work, and the humanities. This site is a notebook and a portfolio.",
-        tags: ["about"],
-      },
-    ],
-  },
+  profile: { title: "Site", tagline: "", links: [] },
+  pages: [],
+  blocks: {},
 };
 
-/***************
- * Load state
- ***************/
-function isValidState(s) {
-  try {
-    return s && Array.isArray(s.pages) && s.blocks;
-  } catch {
-    return false;
-  }
-}
-const loaded = Store.load();
-const state = isValidState(loaded) ? loaded : seed;
-if (!isValidState(loaded)) Store.save(state);
-
-/* -----------------
-   Migrations
-------------------*/
-function migrateV1(st) {
-  if (!st.pages.find((p) => p.id === "about")) {
-    st.pages.push({ id: "about", title: "About" });
-    st.blocks.about = st.blocks.about || [
-      {
-        text: "Hi, I’m Mark. I write about computer science, paralegal work, and the humanities. This site is a notebook and a portfolio.",
-        tags: ["about"],
-      },
-    ];
-  }
-}
-migrateV1(state);
-persist();
-
 /********************
- * Fetch utilities
+ * Safe fetch helpers
  ********************/
 async function fetchJson(url) {
   const r = await fetch(url, { cache: "no-cache" });
@@ -173,59 +47,98 @@ async function fetchText(url) {
   if (!r.ok) throw new Error(`Fetch failed: ${url}`);
   return r.text();
 }
+async function loadJsonSafe(path, fallback = null) {
+  try {
+    return await fetchJson(path);
+  } catch {
+    return fallback;
+  }
+}
+async function loadTextSafe(path, fallback = "") {
+  try {
+    return await fetchText(path);
+  } catch {
+    return fallback;
+  }
+}
 
 /********************************
- * Content loader (Markdown)
+ * Core content loader (/content)
+ ********************************/
+async function loadCoreContent() {
+  const profile = await loadJsonSafe("content/profile.json", defaults.profile);
+  const pages = await loadJsonSafe("content/pages.json", defaults.pages);
+
+  const blocks = {};
+  blocks.dashboard = await loadJsonSafe("content/blocks/dashboard.json", []);
+  blocks.notes = await loadJsonSafe("content/blocks/notes.json", []);
+  blocks.resume = await loadJsonSafe("content/blocks/resume.json", []);
+  blocks.projects = await loadJsonSafe("content/blocks/projects.json", []);
+
+  // About prefers Markdown; fallback to JSON if provided
+  const aboutMd = await loadTextSafe("content/blocks/about.md", "");
+  if (aboutMd.trim()) {
+    blocks.about = [{ text: "", body_md: aboutMd }];
+  } else {
+    blocks.about = await loadJsonSafe("content/blocks/about.json", [
+      { text: "About page not configured yet.", tags: ["about"] },
+    ]);
+  }
+
+  return { profile, pages, blocks };
+}
+
+/********************************
+ * Articles loader (/content/articles)
  ********************************/
 async function loadArticlesIndex() {
-  // network first, fallback to cached articles if it fails
   try {
-    const list = await fetchJson("content/index.json");
+    const list = await fetchJson("content/articles/index.json");
     const normalized = list.map((a) => ({
-      id: a.slug, // keep id = slug
+      id: a.slug,
       slug: a.slug,
       text: a.title,
       date: a.date || "",
       tags: a.tags || [],
       summary: a.summary || "",
       draft: !!a.draft,
-      // body_md loaded lazily
+      // body_md lazy
     }));
     state.blocks.articles = normalized;
     persist();
   } catch (err) {
-    console.warn("Using cached/seed articles. Reason:", err.message);
-    // leave state as-is (cached or seed)
+    console.warn(
+      "Articles index load failed; using cached if any. Reason:",
+      err.message
+    );
   }
 }
-
 async function ensureArticleBody(art) {
   if (!art || art.body_md) return art;
   try {
     art.body_md = await fetchText(`content/articles/${art.slug}.md`);
-  } catch (e) {
+  } catch {
     art.body_md = "_Could not load article body._";
-    console.error(e);
   }
   return art;
 }
 
 /***********
- * Router
+ * Router map
  ***********/
 const routes = {
   dashboard: renderDashboard,
   articles: renderArticles,
-  // notes: renderNotes,
+  notes: renderNotes,
   resume: renderResume,
-  // projects: renderProjects,
+  projects: renderProjects,
   about: renderAbout,
 };
 
 function route() {
   const raw = location.hash.replace("#/", "") || "dashboard";
 
-  // Shareable slug route
+  // Shareable article route: #/a/<slug>
   if (raw.startsWith("a/")) {
     const sg = decodeURIComponent(raw.split("/")[1] || "");
     const art = findArticleBySlug(sg);
@@ -237,14 +150,16 @@ function route() {
     }
   }
 
+  // Article by id or slug: #/article/<id-or-slug>
   if (raw.startsWith("article/")) {
-    const articleId = decodeURIComponent(raw.split("/")[1] || "");
+    const id = decodeURIComponent(raw.split("/")[1] || "");
     setActivePage({ id: "articles", title: "Articles" });
-    renderArticleDetail(articleId);
+    renderArticleDetail(id);
     renderSidebars();
     return;
   }
 
+  // Tag filter: #/tag/<tag>
   if (raw.startsWith("tag/")) {
     const tag = decodeURIComponent(raw.split("/")[1] || "");
     setActivePage({ id: "articles", title: "Articles" });
@@ -254,16 +169,17 @@ function route() {
   }
 
   const id = raw.toLowerCase();
-  const page = state.pages.find((p) => p.id === id) || state.pages[0];
+  const page = state.pages.find((p) => p.id === id) ||
+    state.pages[0] || { id: "dashboard", title: "Home" };
   setActivePage(page);
   (routes[page.id] || renderDashboard)(page);
   renderSidebars();
 }
 
 function setActivePage(page) {
-  const titleEl = document.getElementById("pageTitle");
-  const bcEl = document.getElementById("breadcrumbs");
-  const meta = document.getElementById("pageMeta");
+  const titleEl = byId("pageTitle");
+  const bcEl = byId("breadcrumbs");
+  const meta = byId("pageMeta");
   if (titleEl) titleEl.textContent = page.title;
   if (bcEl) bcEl.innerHTML = `Home / <span>${escapeHtml(page.title)}</span>`;
   const isReading =
@@ -271,7 +187,7 @@ function setActivePage(page) {
   if (meta)
     meta.textContent = isReading
       ? "Reading view"
-      : `${state.blocks[page.id]?.length || 0} blocks`;
+      : `${(state.blocks[page.id] || []).length || 0} blocks`;
   document
     .querySelectorAll(".nav-list a")
     .forEach((a) => a.classList.toggle("active", a.dataset.id === page.id));
@@ -282,12 +198,11 @@ function setActivePage(page) {
  *********************/
 function renderDashboard() {
   const recent = publishedArticles().slice(0, 4);
-  const profile = state.profile || seed.profile;
+  const profile = state.profile || defaults.profile;
   const resumeCount = (state.blocks.resume || []).length;
 
-  document.getElementById("view").innerHTML = `
+  byId("view").innerHTML = `
     <div class="grid cols-3">
-      <!-- Left: About card -->
       <section class="card">
         <div class="block-title">${escapeHtml(profile.title || "About")}</div>
         ${
@@ -307,12 +222,9 @@ function renderDashboard() {
             )
             .join("")}
         </div>
-        <div style="margin-top:10px;">
-          <a class="link" href="#/about">Read more →</a>
-        </div>
+        <div style="margin-top:10px;"><a class="link" href="#/about">Read more →</a></div>
       </section>
 
-      <!-- Middle: Recent Articles feed -->
       <section class="card">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <div>
@@ -326,7 +238,6 @@ function renderDashboard() {
         <div id="homeFeed" style="margin-top:10px; display:grid; gap:10px;"></div>
       </section>
 
-      <!-- Right: Resume teaser -->
       <section class="card">
         <div class="block-title">Resume</div>
         <div class="meta">${resumeCount} entries</div>
@@ -335,18 +246,12 @@ function renderDashboard() {
       </section>
     </div>`;
 
-  // SEO
-  setMeta({
-    title: "Home — Mark's Margins",
-    description: state.profile?.tagline,
-  });
+  setMeta({ title: "Home — Mark's Margins", description: profile.tagline });
 
-  // Mount recent articles
-  const feed = document.getElementById("homeFeed");
+  const feed = byId("homeFeed");
   recent.forEach((a) => feed.appendChild(homeArticleItem(a)));
 
-  // Mount resume teaser
-  const rt = document.getElementById("resumeTeaser");
+  const rt = byId("resumeTeaser");
   (state.blocks.resume || []).slice(0, 2).forEach((it) => {
     const row = document.createElement("div");
     row.className = "card";
@@ -366,9 +271,7 @@ function homeArticleItem(a) {
     )}</div>
     <div class="meta" style="margin:4px 0 8px;">${escapeHtml(
       a.date || ""
-    )} · ${(a.tags || [])
-    .map((t) => `<span class="tag">#${escapeHtml(String(t))}</span>`)
-    .join(" ")}</div>
+    )} · ${(a.tags || []).map(tagLink).join(" ")}</div>
     ${
       a.summary
         ? `<div style="margin-bottom:8px;">${escapeHtml(a.summary)}</div>`
@@ -382,7 +285,7 @@ function homeArticleItem(a) {
  * Render: Articles
  *******************/
 function renderArticles() {
-  const view = document.getElementById("view");
+  const view = byId("view");
   view.innerHTML = `
     <div class="card" style="display:flex; justify-content:space-between; align-items:center; gap:12px;">
       <div>
@@ -404,14 +307,14 @@ function renderArticles() {
     description: "Published and draft articles.",
   });
 
-  document.getElementById("toggleDrafts").addEventListener("change", (e) => {
+  byId("toggleDrafts").addEventListener("change", (e) => {
     state.ui = state.ui || {};
     state.ui.showDrafts = !!e.target.checked;
     persist();
     renderArticles();
   });
 
-  const grid = document.getElementById("articlesGrid");
+  const grid = byId("articlesGrid");
   listableArticles().forEach((b) => grid.appendChild(articleCard(b)));
 }
 
@@ -442,9 +345,7 @@ function articleCard(b) {
     )} ${draftBadge}</div>
     <div class="meta" style="margin:4px 0 8px;">${
       b.date ? escapeHtml(b.date) + " · " : ""
-    }${(b.tags || [])
-    .map((t) => `<span class="tag">#${escapeHtml(String(t))}</span>`)
-    .join(" ")}</div>
+    }${(b.tags || []).map(tagLink).join(" ")}</div>
     ${
       b.summary
         ? `<div style="margin-bottom:10px;">${escapeHtml(b.summary)}</div>`
@@ -470,19 +371,18 @@ function articleCard(b) {
  * Render: Article page
  ************************/
 async function renderArticleDetail(articleId) {
-  const view = document.getElementById("view");
+  const view = byId("view");
   const art = (state.blocks.articles || []).find(
     (a) => a.id === articleId || a.slug === articleId
   );
   if (!art) {
-    view.innerHTML = `<div class='card'><div class='block-title'>Article not found</div></div>`;
+    view.innerHTML = `<div class="card"><div class="block-title">Article not found</div></div>`;
     return;
   }
 
   await ensureArticleBody(art);
   const html = renderMarkdown(art.body_md || "");
 
-  // SEO
   setMeta({
     title: `${art.text} — Mark's Margins`,
     description:
@@ -490,51 +390,41 @@ async function renderArticleDetail(articleId) {
   });
 
   view.innerHTML = `
-    <article class='card'>
-      <div style='display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;'>
+    <article class="card">
+      <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;">
         <div>
-          <h1 class='page-title' style='margin:0;'>${escapeHtml(art.text)}</h1>
-          <div class='meta' style='margin:6px 0 12px;'>${
+          <h1 class="page-title" style="margin:0;">${escapeHtml(art.text)}</h1>
+          <div class="meta" style="margin:6px 0 12px;">${
             art.date ? escapeHtml(art.date) + " · " : ""
-          }${(art.tags || [])
-    .map((t) => `<span class='tag'>#${escapeHtml(String(t))}</span>`)
-    .join(" ")}</div>
-          <div class='meta'>Link: <a class="link" href="#/a/${encodeURIComponent(
+          }${(art.tags || []).map(tagLink).join(" ")}</div>
+          <div class="meta">Link: <a class="link" href="#/a/${encodeURIComponent(
             art.slug
           )}">#/a/${escapeHtml(art.slug)}</a></div>
         </div>
-        ${art.draft ? `<span class='pill'>Draft</span>` : ""}
+        ${art.draft ? `<span class="pill">Draft</span>` : ""}
       </div>
       ${
         art.summary
-          ? `<p style='margin-top:0;' class='meta'>${escapeHtml(
+          ? `<p style="margin-top:0;" class="meta">${escapeHtml(
               art.summary
             )}</p>`
           : ""
       }
-      <div class='article-body' id='articleBody'>${html}</div>
-      <div style='margin-top:14px; display:flex; gap:8px; flex-wrap:wrap;'>
-        <button class='btn' id='copyLinkBtn' title='Copy shareable URL'>Copy link</button>
-        <a class='btn link' href='#/articles'>Back to Articles</a>
+      <div class="article-body" id="articleBody">${html}</div>
+      <div style="margin-top:14px; display:flex; gap:8px; flex-wrap:wrap;">
+        <button class="btn" id="copyLinkBtn" title="Copy shareable URL">Copy link</button>
+        <a class="btn link" href="#/articles">Back to Articles</a>
       </div>
     </article>`;
 
+  // highlight.js, if present
   if (window.hljs) {
     document
       .querySelectorAll("#articleBody pre code")
       .forEach((el) => hljs.highlightElement(el));
   }
 
-  if (window.mediumZoom) {
-    mediumZoom("#articleBody img.zoomable", {
-      background:
-        getComputedStyle(document.documentElement)
-          .getPropertyValue("--bg")
-          .trim() || "rgba(0,0,0,0.85)",
-    });
-  }
-
-  const copyBtn = document.getElementById("copyLinkBtn");
+  const copyBtn = byId("copyLinkBtn");
   if (copyBtn)
     copyBtn.onclick = () => {
       const url = `${location.origin}${location.pathname}#/a/${art.slug}`;
@@ -549,7 +439,7 @@ async function renderArticleDetail(articleId) {
  * Render: Tag view
  ********************/
 function renderTagView(tag) {
-  const view = document.getElementById("view");
+  const view = byId("view");
   const items = (state.blocks.articles || [])
     .slice()
     .sort(byDateDesc)
@@ -569,9 +459,10 @@ function renderTagView(tag) {
     <div class="card">
       <div class="block-title">Tag: #${escapeHtml(tag)}</div>
       <div class="meta">${items.length} matches</div>
+      <div style="margin-top:8px;"><a class="btn link" href="#/articles">Clear filter</a></div>
     </div>
     <div class="grid cols-2" id="articlesGrid"></div>`;
-  const grid = document.getElementById("articlesGrid");
+  const grid = byId("articlesGrid");
   items.forEach((b) => grid.appendChild(articleCard(b)));
 }
 
@@ -579,10 +470,16 @@ function renderTagView(tag) {
  * Render: About
  ******************/
 function renderAbout() {
-  const profile = state.profile || seed.profile;
-  const view = document.getElementById("view");
-
+  const profile = state.profile || defaults.profile;
+  const view = byId("view");
   setMeta({ title: "About — Mark's Margins", description: profile.tagline });
+
+  // about may be markdown (single block with body_md) or plain text block(s)
+  const ab = state.blocks.about || [];
+  const body =
+    ab[0] && ab[0].body_md
+      ? renderMarkdown(ab[0].body_md)
+      : ab.map((b) => `<p>${decorateText(b.text || "")}</p>`).join("");
 
   view.innerHTML = `
     <section class="card">
@@ -606,8 +503,8 @@ function renderAbout() {
       </div>
     </section>
     <section class="card" style="margin-top:12px;">
-      <div class="block-title">Site notes</div>
-      <div class="meta">Articles are served from /content. Update the JSON and Markdown files to publish.</div>
+      <div class="block-title">About</div>
+      <div class="article-body">${body}</div>
     </section>`;
 }
 
@@ -615,16 +512,14 @@ function renderAbout() {
  * Notes/Resume/Projects
  ************************/
 function renderNotes() {
-  const v = document.getElementById("view");
+  const v = byId("view");
   setMeta({ title: "Notes — Mark's Margins", description: "Notes and lists" });
   v.innerHTML = `<div id="notesRoot"></div>`;
   mountBlocks("notesRoot", state.blocks.notes);
 }
-
 function renderResume() {
   const items = state.blocks.resume || [];
-  const v = document.getElementById("view");
-
+  const v = byId("view");
   setMeta({
     title: "Resume — Mark's Margins",
     description: "One-page printable resume",
@@ -634,14 +529,12 @@ function renderResume() {
     <section class="card">
       <div class="resume-toolbar">
         <div class="block-title" style="margin:0;">Resume</div>
-        <div>
-          <button class="btn no-print" id="printResumeBtn" title="Print a one-page PDF">Print résumé</button>
-        </div>
+        <div><button class="btn no-print" id="printResumeBtn" title="Print a one-page PDF">Print résumé</button></div>
       </div>
       <div class="resume" id="resume"></div>
     </section>`;
 
-  const root = document.getElementById("resume");
+  const root = byId("resume");
   items.forEach((it) => {
     const row = document.createElement("div");
     row.className = "row";
@@ -656,12 +549,10 @@ function renderResume() {
     root.appendChild(row);
   });
 
-  const btn = document.getElementById("printResumeBtn");
-  if (btn) btn.onclick = () => window.print();
+  byId("printResumeBtn")?.addEventListener("click", () => window.print());
 }
-
 function renderProjects() {
-  const v = document.getElementById("view");
+  const v = byId("view");
   setMeta({
     title: "Projects — Mark's Margins",
     description: "Selected projects",
@@ -678,7 +569,6 @@ function mountBlocks(rootId, blocks) {
   root.innerHTML = "";
   (blocks || []).forEach((b) => root.appendChild(blockNode(b)));
 }
-
 function blockNode(b) {
   const el = document.createElement("div");
   el.className = "block";
@@ -700,14 +590,16 @@ function blockNode(b) {
   });
   return el;
 }
-
 function renderTags(tags) {
   if (!tags || !tags.length) return "";
-  return `<div style="margin-top:4px;">${tags
-    .map((t) => `<span class="tag">#${escapeHtml(String(t))}</span>`)
-    .join("")}</div>`;
+  return `<div style="margin-top:4px;">${tags.map(tagLink).join("")}</div>`;
 }
-
+function tagLink(t) {
+  const s = String(t);
+  return `<a class="tag" href="#/tag/${encodeURIComponent(s)}">#${escapeHtml(
+    s
+  )}</a>`;
+}
 function decorateText(t) {
   return String(t)
     .replace(
@@ -720,13 +612,12 @@ function decorateText(t) {
         `${s}<a class="tag" href="#/tag/${tag}">#${escapeHtml(tag)}</a>`
     );
 }
-
 function renderSidebars() {
   // left pages
   const list = byId("pageList");
   if (list) {
     list.innerHTML = "";
-    state.pages.forEach((p) => {
+    (state.pages || []).forEach((p) => {
       const li = document.createElement("li");
       const a = document.createElement("a");
       a.href = `#/${p.id}`;
@@ -736,8 +627,7 @@ function renderSidebars() {
       list.appendChild(li);
     });
   }
-
-  // right tags
+  // right tags cloud
   const tags = collectTags();
   const cloud = byId("tagCloud");
   if (cloud) {
@@ -748,7 +638,6 @@ function renderSidebars() {
       )
       .join(" ");
   }
-
   // backlinks
   const pageId = location.hash.replace("#/", "") || "dashboard";
   const bl = backlinksForPage(pageId);
@@ -765,30 +654,29 @@ function renderSidebars() {
     });
   }
 }
-
 function collectTags() {
   const t = {};
-  for (const pid in state.blocks) {
-    (state.blocks[pid] || []).forEach(walk);
-  }
+  for (const pid in state.blocks) (state.blocks[pid] || []).forEach(walk);
   function walk(b) {
     (b.tags || []).forEach((tag) => (t[tag] = (t[tag] || 0) + 1));
     (b.children || []).forEach(walk);
   }
+  // include article tags
+  (state.blocks.articles || []).forEach((a) =>
+    (a.tags || []).forEach((tag) => (t[tag] = (t[tag] || 0) + 1))
+  );
   return t;
 }
-
 function backlinksForPage(pageId) {
-  const title = state.pages.find((p) => p.id === pageId)?.title || pageId;
+  const title =
+    (state.pages.find((p) => p.id === pageId) || {}).title || pageId;
   const links = [];
-  for (const pid in state.blocks) {
-    (state.blocks[pid] || []).forEach(walk(pid));
-  }
+  for (const pid in state.blocks) (state.blocks[pid] || []).forEach(walk(pid));
   function walk(pid) {
     return function recur(b) {
       if ((b.text || "").includes(`[[${title}]]`)) {
         links.push({
-          page: state.pages.find((p) => p.id === pid)?.title || pid,
+          page: (state.pages.find((p) => p.id === pid) || {}).title || pid,
           snippet: b.text,
         });
       }
@@ -801,7 +689,7 @@ function backlinksForPage(pageId) {
 /***********
  * Search
  ***********/
-const q = document.getElementById("q");
+const q = byId("q");
 document.addEventListener("keydown", (e) => {
   if (e.key === "/" && document.activeElement !== q) {
     e.preventDefault();
@@ -811,15 +699,18 @@ document.addEventListener("keydown", (e) => {
 q?.addEventListener("input", onSearch);
 
 function onSearch() {
-  const term = q.value.trim().toLowerCase();
-  if (!term) {
+  const termRaw = q.value.trim();
+  if (!termRaw) {
     route();
     return;
   }
-  const results = [];
-  for (const pid in state.blocks) {
-    (state.blocks[pid] || []).forEach(walk(pid));
+  if (termRaw.startsWith("#")) {
+    location.hash = `#/tag/${encodeURIComponent(termRaw.slice(1))}`;
+    return;
   }
+  const term = termRaw.toLowerCase();
+  const results = [];
+  for (const pid in state.blocks) (state.blocks[pid] || []).forEach(walk(pid));
   function walk(pid) {
     return function recur(b) {
       const hay = `${b.text || ""} ${(b.tags || []).join(" ")} ${
@@ -829,7 +720,7 @@ function onSearch() {
       (b.children || []).forEach(recur);
     };
   }
-  const v = document.getElementById("view");
+  const v = byId("view");
   v.innerHTML = `<div class="card"><div class="block-title">Search results</div><div class="meta">${results.length} matches</div></div>`;
   results.forEach((r) => v.appendChild(blockNode(r.b)));
 }
@@ -837,30 +728,25 @@ function onSearch() {
 /***********************
  * Theme (Light/Dark)
  ***********************/
-const root = document.documentElement;
-
+const rootEl = document.documentElement;
 function applyTheme() {
   if (!state.theme) state.theme = "dark";
-  root.setAttribute("data-theme", state.theme === "light" ? "light" : "dark");
+  rootEl.setAttribute("data-theme", state.theme === "light" ? "light" : "dark");
   updateThemeToggleUI();
 }
-
 function toggleTheme() {
   state.theme = state.theme === "light" ? "dark" : "light";
   persist();
   applyTheme();
 }
-
 function updateThemeToggleUI() {
-  const btn = document.getElementById("themeBtn");
+  const btn = byId("themeBtn");
   if (!btn) return;
   const isLight = state.theme === "light";
   btn.textContent = isLight ? "🌞 Light" : "🌙 Dark";
   btn.setAttribute("aria-pressed", String(isLight));
 }
-
-// Wire button + keyboard shortcut (t)
-document.getElementById("themeBtn")?.addEventListener("click", toggleTheme);
+byId("themeBtn")?.addEventListener("click", toggleTheme);
 document.addEventListener("keydown", (e) => {
   if (
     e.key.toLowerCase() === "t" &&
@@ -874,7 +760,7 @@ document.addEventListener("keydown", (e) => {
 /***********************
  * Export + extras
  ***********************/
-document.getElementById("exportBtn")?.addEventListener("click", () => {
+byId("exportBtn")?.addEventListener("click", () => {
   const data = new Blob([JSON.stringify(state, null, 2)], {
     type: "application/json",
   });
@@ -885,29 +771,45 @@ document.getElementById("exportBtn")?.addEventListener("click", () => {
   a.click();
   URL.revokeObjectURL(url);
 });
-
-document.getElementById("exportSiteMap")?.addEventListener("click", () => {
-  const xml = buildSitemapXml();
-  downloadText("sitemap.xml", xml);
-});
-document.getElementById("exportRss")?.addEventListener("click", () => {
-  const xml = buildRssXml();
-  downloadText("rss.xml", xml);
-});
+byId("exportSiteMap")?.addEventListener("click", () =>
+  downloadText("sitemap.xml", buildSitemapXml())
+);
+byId("exportRss")?.addEventListener("click", () =>
+  downloadText("rss.xml", buildRssXml())
+);
 
 /***********************
  * Markdown renderer
  ***********************/
+// marked config + highlight.js hook
 if (window.marked) {
-  // Core options
   marked.setOptions({
-    gfm: true, // tables, task lists
-    breaks: false, // keep normal paragraphs
-    headerIds: false, // cleaner headings
-    mangle: false, // do not mangle emails
+    gfm: true,
+    breaks: false,
+    headerIds: false,
+    mangle: false,
   });
-
-  // Syntax highlight if hljs is present
+  // image renderer: allow relative 'images/foo.jpg' under /content/
+  marked.use({
+    renderer: {
+      image({ href, title, text }) {
+        let src = href || "";
+        if (src && !/^https?:\/\//i.test(src) && !src.startsWith("/")) {
+          src = `content/${src}`;
+        }
+        const alt = text || "";
+        const cap = title || "";
+        const img = `<img src="${src}" alt="${escapeHtml(
+          alt
+        )}" loading="lazy" decoding="async" class="article-img">`;
+        return cap
+          ? `<figure class="article-figure">${img}<figcaption>${escapeHtml(
+              cap
+            )}</figcaption></figure>`
+          : img;
+      },
+    },
+  });
   if (window.hljs) {
     marked.setOptions({
       highlight: (code, lang) => {
@@ -925,34 +827,7 @@ if (window.marked) {
       },
     });
   }
-
-  // Image rendering: figure + caption + lazy loading
-  marked.use({
-    renderer: {
-      image({ href, title, text }) {
-        // allow relative paths like "images/desk.jpg" in your MD
-        // and auto-prefix with "content/" since the page lives at the site root
-        let src = href || "";
-        if (src && !/^https?:\/\//i.test(src) && !src.startsWith("/")) {
-          src = `content/${src}`; // e.g. "images/foo.jpg" -> "content/images/foo.jpg"
-        }
-
-        const alt = text || "";
-        const cap = title || ""; // markdown title becomes caption
-        const img = `<img src="${src}"
-                         alt="${String(alt).replace(/"/g, "&quot;")}"
-                         loading="lazy"
-                         decoding="async"
-                         class="article-img zoomable">`;
-
-        return cap
-          ? `<figure class="article-figure">${img}<figcaption>${cap}</figcaption></figure>`
-          : img;
-      },
-    },
-  });
 }
-
 function renderMarkdown(src) {
   const md = src || "";
   return window.marked ? marked.parse(md) : md;
@@ -986,7 +861,6 @@ function ensureMeta(attr, name, content) {
  * Sitemap / RSS
  ****************************/
 function siteBase() {
-  // adjust if deploying under /repo/ path; this keeps current path
   return `${location.origin}${location.pathname.replace(/index\.html?$/, "")}`;
 }
 function buildSitemapXml() {
@@ -1055,7 +929,7 @@ function slug(s) {
 }
 function escapeHtml(s) {
   return String(s).replace(
-    /[&<>"']/g,
+    /[&<>\"']/g,
     (c) =>
       ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#039;" }[
         c
@@ -1084,9 +958,23 @@ function findArticleBySlug(sg) {
 /**********
  * Init
  **********/
+let state = defaults;
+
+async function bootstrapState() {
+  // try local cache
+  const cached = Store.load();
+  if (cached && Array.isArray(cached.pages) && cached.blocks) {
+    state = cached;
+  } else {
+    const core = await loadCoreContent();
+    state = { ...defaults, ...core };
+  }
+}
+
 async function init() {
   applyTheme();
-  await loadArticlesIndex(); // populate articles from /content
+  await bootstrapState(); // profile/pages/blocks
+  await loadArticlesIndex(); // articles index (merges into state.blocks)
   window.addEventListener("hashchange", route);
   route();
 }
