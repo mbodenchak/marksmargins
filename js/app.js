@@ -966,6 +966,114 @@ async function bootstrapState() {
   }
 }
 
+// Drawer setup
+function setupDrawer() {
+  // Support both old id="menuBtn" and new id="drawerOpen"
+  const openBtn =
+    document.getElementById("drawerOpen") || document.getElementById("menuBtn");
+  const drawer = document.getElementById("drawer");
+  const closeBtn = document.getElementById("drawerClose");
+  const backdrop = document.getElementById("drawerBackdrop");
+  const drawerList = document.getElementById("drawerList");
+  const pageList = document.getElementById("pageList");
+
+  if (!openBtn || !drawer || !backdrop) return;
+
+  // helper: focusable elements
+  const getFocusable = (container) =>
+    Array.from(
+      container.querySelectorAll(
+        'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+      )
+    ).filter((el) => !el.hasAttribute("disabled"));
+
+  // keep the drawer nav in sync with the left sidebar
+  const syncDrawerNav = () => {
+    if (!drawerList || !pageList) return;
+    drawerList.innerHTML = pageList.innerHTML;
+  };
+  syncDrawerNav();
+
+  let lastFocus = null;
+  const open = () => {
+    syncDrawerNav();
+    lastFocus = document.activeElement;
+    drawer.classList.add("open");
+    drawer.setAttribute("aria-hidden", "false");
+    openBtn.setAttribute("aria-expanded", "true");
+    backdrop.hidden = false;
+    document.body.style.overflow = "hidden"; // lock scroll
+
+    const f = getFocusable(drawer);
+    (f[0] || drawer).focus();
+
+    // close after navigating
+    drawerList
+      ?.querySelectorAll("a")
+      .forEach((a) => a.addEventListener("click", close, { once: true }));
+  };
+
+  const close = () => {
+    drawer.classList.remove("open");
+    drawer.setAttribute("aria-hidden", "true");
+    openBtn.setAttribute("aria-expanded", "false");
+    backdrop.hidden = true;
+    document.body.style.overflow = ""; // unlock scroll
+    if (lastFocus && document.contains(lastFocus)) {
+      lastFocus.focus();
+    } else {
+      openBtn.focus();
+    }
+  };
+
+  openBtn.addEventListener("click", open);
+  closeBtn?.addEventListener("click", close);
+  backdrop.addEventListener("click", close);
+
+  // ESC closes
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && drawer.classList.contains("open")) {
+      e.preventDefault();
+      close();
+    }
+  });
+
+  // Focus trap while open
+  drawer.addEventListener("keydown", (e) => {
+    if (e.key !== "Tab" || !drawer.classList.contains("open")) return;
+    const f = getFocusable(drawer);
+    if (!f.length) return;
+    const first = f[0];
+    const last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  });
+
+  // Auto-close on desktop
+  const mq = window.matchMedia("(min-width: 861px)");
+  const onChange = (e) => {
+    if (e.matches) close();
+  };
+  mq.addEventListener
+    ? mq.addEventListener("change", onChange)
+    : mq.addListener(onChange);
+
+  // Re-sync if the left nav changes dynamically
+  if (pageList) {
+    const obs = new MutationObserver(syncDrawerNav);
+    obs.observe(pageList, { childList: true, subtree: true });
+  }
+}
+// init hook
+document.addEventListener("DOMContentLoaded", () => {
+  setupDrawer();
+});
+
 async function init() {
   applyTheme();
   await bootstrapState(); // load from cache or /content

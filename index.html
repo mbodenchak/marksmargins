@@ -22,6 +22,15 @@
   </head>
   <body>
     <header>
+      <button
+        id="drawerOpen"
+        class="btn icon-only mobile-only"
+        aria-label="Open menu"
+        aria-controls="drawer"
+        aria-expanded="false"
+      >
+        ☰
+      </button>
       <div class="brand">Mark's<span class="dot">•</span>Margins</div>
       <div class="search" role="search">
         <svg
@@ -62,5 +71,31 @@
       </div>
       <div id="view"></div>
     </main>
+    <nav
+      id="drawer"
+      class="drawer"
+      aria-label="Mobile menu"
+      aria-hidden="true"
+      tabindex="-1"
+    >
+      <div class="drawer-header">
+        <strong>Mark’s Margins</strong>
+        <button
+          id="drawerClose"
+          class="btn icon-only"
+          aria-label="Close"
+          data-close
+        >
+          ×
+        </button>
+      </div>
+      <ul id="drawerList" class="nav-list"></ul>
+    </nav>
+    <div id="drawerBackdrop" class="drawer-backdrop" hidden></div>
+
+    <footer>
+      Press <span class="kbd">/</span> to search • <span class="kbd">t</span> to
+      toggle theme
+    </footer>
   </body>
 </html>
