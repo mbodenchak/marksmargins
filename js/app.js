@@ -27,7 +27,7 @@ const Store = {
  * Defaults (tiny)
  **********************/
 const defaults = {
-  theme: "dark",
+  theme: "light",
   ui: { showDrafts: false },
   profile: { title: "Site", tagline: "", links: [] },
   pages: [],
@@ -199,10 +199,9 @@ function setActivePage(page) {
 function renderDashboard() {
   const recent = publishedArticles().slice(0, 4);
   const profile = state.profile || defaults.profile;
-  const resumeCount = (state.blocks.resume || []).length;
 
   byId("view").innerHTML = `
-    <div class="grid cols-3">
+    <div class="grid cols-1">
       <section class="card">
         <div class="block-title">${escapeHtml(profile.title || "About")}</div>
         ${
@@ -238,28 +237,13 @@ function renderDashboard() {
         <div id="homeFeed" style="margin-top:10px; display:grid; gap:10px;"></div>
       </section>
 
-      <section class="card">
-        <div class="block-title">Resume</div>
-        <div class="meta">${resumeCount} entries</div>
-        <div id="resumeTeaser" style="margin-top:10px; display:grid; gap:8px;"></div>
-        <div style="margin-top:10px;"><a class="btn link" href="#/resume">Open resume</a></div>
-      </section>
+
     </div>`;
 
   setMeta({ title: "Home — Mark's Margins", description: profile.tagline });
 
   const feed = byId("homeFeed");
   recent.forEach((a) => feed.appendChild(homeArticleItem(a)));
-
-  const rt = byId("resumeTeaser");
-  (state.blocks.resume || []).slice(0, 2).forEach((it) => {
-    const row = document.createElement("div");
-    row.className = "card";
-    row.innerHTML = `<div class="title">${escapeHtml(
-      it.text
-    )}</div><div class="meta">${escapeHtml(it.meta || "")}</div>`;
-    rt.appendChild(row);
-  });
 }
 
 function homeArticleItem(a) {
