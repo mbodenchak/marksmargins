@@ -311,6 +311,7 @@ main {
 .meta {
   color: var(--muted);
   font-size: 12px;
+  padding-left: 0.5rem;
 }
 a {
   text-decoration: none;
@@ -361,18 +362,103 @@ a {
 /* Resume */
 .resume {
   display: grid;
-  gap: 14px;
+  gap: 1.2rem;
+  font-size: 11pt;
+  line-height: 1.35;
 }
+
+.resume .section-header {
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 13pt;
+  letter-spacing: 0.5px;
+  color: var(--accent);
+  margin-top: 1rem;
+  border-bottom: 2px solid var(--border);
+  padding-bottom: 0.25rem;
+}
+
 .resume .row {
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 8px;
-  padding-bottom: 8px;
+  gap: 0.5rem;
+  padding-bottom: 0.3rem 0 0.6rem;
   border-bottom: 1px dashed var(--border);
 }
+
 .resume .title {
-  font-weight: 700;
+  font-weight: 600;
+  font-size: 12pt;
+  color: var(--text);
 }
+
+.resume .meta {
+  color: var(--muted);
+  font-size: 10.5pt;
+  white-space: nowrap;
+}
+.resume .details {
+  grid-column: 1 / -1;
+  padding-left: 1.2rem;
+  margin-top: 0.25rem;
+}
+.resume .details .item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.4rem;
+  margin: 0.2rem 0;
+  color: var(--muted);
+  font-size: 10.5pt;
+}
+.resume .details .item::before {
+  content: "•";
+  color: var(--accent-2);
+  margin-right: 0.3rem;
+}
+
+.resume .skills-group {
+  grid-column: 1 / -1;
+  margin-top: 0.4rem;
+}
+.resume .skills-group .group-title {
+  font-weight: 600;
+  font-size: 11pt;
+  margin-bottom: 0.2rem;
+  color: var(--text);
+}
+.resume .skills-group .skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.resume .skills-group .skill {
+  padding: 2px 8px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 10pt;
+  background: var(--panel);
+  color: var(--muted);
+}
+
+.resume section {
+  margin-bottom: 1.2rem;
+}
+
+.resume-toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+.resume-toolbar .btn {
+  padding: 6px 10px;
+}
+
+.resume a {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
 .resume .pill {
   padding: 2px 8px;
   border: 1px solid var(--border);
@@ -440,8 +526,7 @@ footer {
     border: none !important;
   }
 
-  /* Resume typography */
-  .resume {
+  /* .resume {
     font-size: 11pt;
     line-height: 1.25;
   }
@@ -457,12 +542,12 @@ footer {
     font-size: 12pt;
   }
   .resume .row .meta {
-    font-size: 10pt;
+    font-size: 15pt;
     opacity: 1;
   }
   .resume .row .meta::before {
     content: "";
-  }
+  } */
 
   /* Hide buttons on resume page */
   .no-print {

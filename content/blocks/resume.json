@@ -1,65 +1,147 @@
-[
-  {
-    "text": "IP Paralegal Intern — Binderow Law Office",
-    "meta": "Jun–Aug 2025",
-    "children": [
-      {
-        "text": "Created a trademark maintenance schedule for the year 2027, and wrote a program to complete the task automatically for future use, saving time and increasing efficiency in the office."
-      },
-      {
-        "text": "Researched and analyzed Office action refusals under SS2(d) and 2(e) and identified successful response strategies based on prior firm filings."
-      },
-      {
-        "text": "Performed USPTO TESS trademark clearance searches and leveraged generative AI to build targeted, progressively refined regex search strings to improve search accuracy."
-      },
-      {
-        "text": "Investigated and briefed supervising attorney on jurisdiction specific requirements for international IP assignments, including notarization, POAs, and apostille requirements in Central and South America."
-      },
-      {
-        "text": "Wrote articles concerning copyright and generative AI, transformative use, and digital library sourcing."
-      },
-      {
-        "text": "Reviewed, annotated, drafted, and organized legal documents including assignment agreements and cease and desist letters under supervision, providing accuracy and dependability."
-      }
-    ]
-  },
-  {
-    "text": "Freelance Web Developer & Consultant — Various Clients",
-    "meta": "Nov 2022–May 2025",
-    "children": [
-      {
-        "text": "Delivered secure, process oriented solutions for professional clients."
-      },
-      {
-        "text": "Maintained strict confidentiality under NDA agreements, reflecting sensitivity to proprietary and intellectual property concerns."
-      },
-      {
-        "text": "Maintained and organized records, invoices, and project files across multiple platforms."
-      },
-      {
-        "text": "Produced detailed technical documentation."
-      },
-      {
-        "text": "Produced 300+ hours of instructional video content for an international technology team, ensuring technical accuracy and adherence to brand standards."
-      }
-    ]
-  },
-  {
-    "text": "Secondary Latin Teacher, Department Head — Amplus Academy/American Preparatory Academy",
-    "meta": "Jun 2018–Nov 2022",
-    "children": [
-      {
-        "text": "Directed a team of 5 teachers, coordinating complex schedules, documentation, and compliance with institutional standards."
-      },
-      {
-        "text": "Developed, revised, and proofed structured lesson plans, assessments, and reporting systems, ensuring accuracy, version control, and adherence to policy."
-      },
-      {
-        "text": "Oversaw data tracking and performance reporting for 200 students annually, producing records and summaries for review by administrators and stakeholders."
-      },
-      {
-        "text": "Delivered instruction in hybrid programs during COVID, requiring adaptation of materials for multiple platforms, accurate record keeping, and effective correspondence."
-      }
-    ]
-  }
-]
+{
+  "sections": [
+    {
+      "key": "education",
+      "title": "Education",
+      "items": [
+        {
+          "degree": "Bachelor of Science in Computer Science",
+          "school": "Western Governors University",
+          "location": "Online",
+          "date": "Current",
+          "bullets": []
+        },
+        {
+          "degree": "ABA Approved Paralegal Certificate",
+          "school": "University of San Diego School of Law Paralegal Program",
+          "location": "San Diego, CA",
+          "date": "2025",
+          "bullets": [
+            "Coursework: Civil Litigation, Legal Research and Writing, E-Discovery, Business Entities, Contract Law, and Wills, Trusts, and Estates",
+            "Practical Assignments: Conducted legal research and citation, used legal software, drafted estate documents, constructed trial calendars"
+          ]
+        },
+        {
+          "degree": "Master of Arts in Classics",
+          "school": "San Francisco State University",
+          "location": "San Francisco, CA",
+          "date": "2019",
+          "bullets": ["Thesis: Foreign Powers and Coercive Trade in Antiquity"]
+        },
+        {
+          "degree": "Bachelor of Arts in Classics",
+          "school": "San Diego State University",
+          "location": "San Diego, CA",
+          "date": "2010",
+          "bullets": []
+        }
+      ]
+    },
+    {
+      "key": "experience",
+      "title": "Experience",
+      "items": [
+        {
+          "title": "IP Paralegal Intern",
+          "org": "Binderow Law Office",
+          "location": "",
+          "date": "Jun–Aug 2025",
+          "bullets": [
+            "Created a trademark maintenance schedule for the year 2027, and wrote a program to complete the task automatically for future use, saving time and increasing efficiency in the office.",
+            "Researched and analyzed Office action refusals under §§2(d) and 2(e) and identified successful response strategies based on prior firm filings.",
+            "Performed USPTO TESS trademark clearance searches and leveraged generative AI to build targeted, progressively refined regex search strings to improve search accuracy.",
+            "Investigated and briefed supervising attorney on jurisdiction-specific requirements for international IP assignments, including notarization, legalization, POAs, and apostille requirements in Central and South America.",
+            "Wrote articles concerning copyright and generative AI, transformative use, and digital library sourcing.",
+            "Reviewed, annotated, drafted, and organized legal documents including assignment agreements and cease and desist letters under supervision, providing accuracy and dependability."
+          ]
+        },
+        {
+          "title": "Freelance Web Developer & Consultant",
+          "org": "Various Clients",
+          "location": "",
+          "date": "Nov 2022–May 2025",
+          "bullets": [
+            "Delivered secure, process oriented solutions for professional clients.",
+            "Maintained strict confidentiality under NDA agreements, reflecting sensitivity to proprietary and intellectual property concerns.",
+            "Maintained and organized records, invoices, and project files across multiple platforms.",
+            "Produced detailed technical documentation.",
+            "Produced 300+ hours of instructional video content for an international technology team, ensuring technical accuracy and adherence to brand standards."
+          ]
+        },
+        {
+          "title": "Secondary Latin Teacher, Department Head",
+          "org": "Amplus Academy/American Preparatory Academy",
+          "location": "",
+          "date": "Jun 2018–Nov 2022",
+          "bullets": [
+            "Directed a team of 5 teachers, coordinating complex schedules, documentation, and compliance with institutional standards.",
+            "Developed, revised, and proofed structured lesson plans, assessments, and reporting systems, ensuring accuracy, version control, and adherence to policy.",
+            "Oversaw data tracking and performance reporting for 200 students annually, producing records and summaries for review by administrators and stakeholders.",
+            "Delivered instruction in hybrid programs during COVID, requiring adaptation of materials for multiple platforms, accurate record keeping, and effective correspondence."
+          ]
+        }
+      ]
+    },
+    {
+      "key": "skills",
+      "title": "Skills",
+      "groups": [
+        {
+          "label": "Legal Knowledge",
+          "items": [
+            "Civil litigation",
+            "Contract law",
+            "Trusts and estates",
+            "Trademark applications and maintenance",
+            "Copyright"
+          ]
+        },
+        {
+          "label": "Research & Writing",
+          "items": [
+            "Strong analytical and reasoning skills developed through teaching and legal practice"
+          ]
+        },
+        {
+          "label": "Technology",
+          "items": [
+            "Database design",
+            "Programming",
+            "Version control",
+            "Automation",
+            "Accuracy and confidentiality focused workflows"
+          ]
+        },
+        {
+          "label": "Proficient in",
+          "items": [
+            "AI Prompt Engineering",
+            "LexisNexis",
+            "Westlaw",
+            "Microsoft Office",
+            "SharePoint",
+            "Teams",
+            "Adobe Acrobat",
+            "USPTO TESS",
+            "USPTO TSDR"
+          ]
+        },
+        {
+          "label": "Familiar with",
+          "items": ["CaseMap", "CloudNine Concordance", "TrialDirector 6"]
+        }
+      ]
+    },
+    {
+      "key": "affiliations",
+      "title": "Affiliations",
+      "items": [
+        {
+          "role": "Member",
+          "org": "San Diego Paralegal Association",
+          "date": ""
+        }
+      ]
+    }
+  ]
+}

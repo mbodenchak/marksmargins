@@ -493,7 +493,6 @@ function renderAbout() {
  * Resume/Projects
  ************************/
 function renderResume() {
-  const items = state.blocks.resume || [];
   const v = byId("view");
   setMeta({
     title: "Resume — Mark's Margins",
@@ -510,22 +509,117 @@ function renderResume() {
     </section>`;
 
   const root = byId("resume");
-  items.forEach((it) => {
-    const row = document.createElement("div");
-    row.className = "row";
-    row.innerHTML = `
-      <div>
-        <div class="title">${escapeHtml(it.text)}</div>
-        ${(it.children || [])
-          .map((c) => `<div class="meta">• ${escapeHtml(c.text)}</div>`)
-          .join("")}
-      </div>
-      <div class="meta">${escapeHtml(it.meta || "")}</div>`;
-    root.appendChild(row);
-  });
+  const data = state.blocks.resume;
+
+  // --- Helpers ---
+  const esc = (s) => escapeHtml(String(s ?? ""));
+  const make = (tag, cls, html) => {
+    const el = document.createElement(tag);
+    if (cls) el.className = cls;
+    if (html != null) el.innerHTML = html;
+    return el;
+  };
+
+  const addRow = (parent, { title, meta, bullets }) => {
+    const row = make("div", "row");
+    const left = make("div", "");
+    left.appendChild(make("div", "title", esc(title)));
+    if (Array.isArray(bullets) && bullets.length > 0) {
+      const det = make("div", "details");
+      bullets.forEach((d) => det.appendChild(make("div", "item", esc(d))));
+      left.appendChild(det);
+    }
+    row.appendChild(left);
+    row.appendChild(make("div", "meta", esc(meta || "")));
+    parent.appendChild(row);
+  };
+
+  const addSectionHeader = (parent, text) =>
+    parent.appendChild(make("div", "section-header", esc(text)));
+
+  const renderSkillsGroups = (parent, groups = []) => {
+    groups.forEach((g) => {
+      const wrap = make("div", "skills-group");
+      wrap.appendChild(
+        make("div", "group-title", esc(g.label || g.title || ""))
+      );
+      const list = make("div", "skill-list");
+      (g.items || []).forEach((s) =>
+        list.appendChild(make("div", "skill", esc(s)))
+      );
+      wrap.appendChild(list);
+      parent.appendChild(wrap);
+    });
+  };
+
+  const renderSimpleList = (parent, items = []) => {
+    items.forEach((it) => {
+      const title =
+        it.title ||
+        it.role ||
+        it.degree ||
+        it.org ||
+        (typeof it === "string" ? it : "");
+      const meta = [it.date, it.location].filter(Boolean).join(" · ");
+      const bullets = it.bullets || it.details || [];
+      addRow(parent, { title, meta, bullets });
+    });
+  };
+
+  const renderStructured = (sections = []) => {
+    sections.forEach((section) => {
+      const sec = make("section");
+      addSectionHeader(sec, section.title || section.name || "Section");
+
+      if (section.key === "education" || section.key === "experience") {
+        (section.items || []).forEach((it) => {
+          const titleParts = [];
+          if (it.degree) titleParts.push(it.degree);
+          if (it.title) titleParts.push(it.title);
+          if (it.org || it.school)
+            titleParts.push("— " + (it.org || it.school));
+          const meta = [it.date, it.location].filter(Boolean).join(" · ");
+          addRow(sec, {
+            title: titleParts.join(" "),
+            meta,
+            bullets: it.bullets || it.details || it.coursework || [],
+          });
+        });
+      } else if (section.key === "skills") {
+        renderSkillsGroups(sec, section.groups || []);
+      } else {
+        renderSimpleList(sec, section.items || []);
+      }
+
+      root.appendChild(sec);
+    });
+  };
+
+  // fallback for older data
+  const renderLegacy = (items = []) => {
+    const sec = make("section");
+    addSectionHeader(sec, "Resume");
+    items.forEach((it) =>
+      addRow(sec, {
+        title: it.text,
+        meta: it.meta,
+        bullets: (it.children || []).map((c) => c.text),
+      })
+    );
+    root.appendChild(sec);
+  };
+
+  if (Array.isArray(data)) {
+    renderLegacy(data);
+  } else if (data && Array.isArray(data.sections)) {
+    renderStructured(data.sections);
+  } else {
+    root.appendChild(make("div", "meta", "No resume data found."));
+  }
 
   byId("printResumeBtn")?.addEventListener("click", () => window.print());
 }
+
 function renderProjects() {
   const v = byId("view");
   setMeta({
