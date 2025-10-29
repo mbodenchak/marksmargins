@@ -37,6 +37,15 @@ const defaults = {
 /********************
  * Safe fetch helpers
  ********************/
+async function fetchMeta() {
+  try {
+    return await fetchJson("content/meta.json");
+  } catch {
+    // If meta is missing, treat as version 0
+    return { version: 0 };
+  }
+}
+
 async function fetchJson(url) {
   const r = await fetch(url, { cache: "no-cache" });
   if (!r.ok) throw new Error(`Fetch failed: ${url}`);
@@ -921,26 +930,45 @@ function findArticleBySlug(sg) {
   return (state.blocks.articles || []).find((a) => a.slug === sg);
 }
 
-/**********
- * Init
- **********/
 let state = defaults;
 
+// helper to read /content/meta.json
+async function fetchMeta() {
+  try {
+    return await fetchJson("content/meta.json");
+  } catch {
+    return { version: 0 };
+  }
+}
+
 async function bootstrapState() {
-  // try local cache
   const cached = Store.load();
-  if (cached && Array.isArray(cached.pages) && cached.blocks) {
-    state = cached;
-  } else {
+  const meta = await fetchMeta(); // { version: number, updated: string }
+  const cachedVer = cached?.__contentVersion ?? -1;
+  const needsRefresh = !cached || cachedVer !== meta.version;
+
+  if (needsRefresh) {
+    console.log("[Site] Loading fresh content, version", meta.version);
+
+    // fresh load from /content/
     const core = await loadCoreContent();
     state = { ...defaults, ...core };
+
+    // include the articles index (so articles always refresh)
+    await loadArticlesIndex();
+
+    // store version for next comparison
+    state.__contentVersion = meta.version;
+    persist();
+  } else {
+    console.log("[Site] Using cached state, version", cachedVer);
+    state = cached;
   }
 }
 
 async function init() {
   applyTheme();
-  await bootstrapState(); // profile/pages/blocks
-  await loadArticlesIndex(); // articles index (merges into state.blocks)
+  await bootstrapState(); // load from cache or /content
   window.addEventListener("hashchange", route);
   route();
 }
