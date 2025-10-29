@@ -1,16 +1,46 @@
 [
   {
-    "slug": "ai-nontraditional-marks",
-    "title": "AI and nontraditional marks. A quick explainer on scent, color, and shape marks.",
-    "date": "2025-10-01",
-    "tags": ["ip", "trademarks", "article"],
+    "slug": "generative-ai-and-copyright",
+    "title": "Legal Landscape in Turmoil: Generative AI and Copyright Infringement.",
+    "date": "2025-08-25",
+    "tags": [
+      "ip",
+      "copyright",
+      "generative ai",
+      "infringement",
+      "kadrey v. meta",
+      "anthropic v. bartz"
+    ],
+    "summary": "Courts grapple with transformative use and what constitutes infringement as creatives raise the alarm over generative AI.",
+    "draft": false
+  },
+  {
+    "slug": "nontraditional-marks",
+    "title": "What’s that Smell? Understanding Nontraditional Trademarks in the U.S.",
+    "date": "2025-08-19",
+    "tags": [
+      "nontraditional trademarks",
+      "scent",
+      "sound",
+      "smell",
+      "ip",
+      "trademarks"
+    ],
+    "summary": "The surprising ways color, sound, and even scent can signal a brand.",
+    "draft": false
+  },
+  {
+    "slug": "new-test-article",
+    "title": "Article post to test uploading a new .md file and seeing if it auto updates on deploy.",
+    "date": "2025-08-01",
+    "tags": ["development", "website", "code", "design"],
     "summary": "What counts as a nontraditional mark and why functionality and distinctiveness matter.",
     "draft": false
   },
   {
     "slug": "markdown-showcase",
     "title": "Markdown Showcase: A Living Demo",
-    "date": "2025-10-28",
+    "date": "2025-07-28",
     "tags": ["demo", "markdown", "guide"],
     "summary": "A compact article that demonstrates headings, emphasis, links, lists, code blocks, and site-specific wiki links.",
     "draft": false
