@@ -1,6 +1,6 @@
 [
   {
-    "text": "Single User Dungeon in JS",
+    "text": "Single User MUD Game in JS",
     "tags": ["javascript", "game"],
     "children": [{ "text": "Map system and random events." }]
   },
