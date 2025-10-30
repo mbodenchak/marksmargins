@@ -1,17 +1,90 @@
-# Hi, I’m Mark.  
+<section class="about" aria-labelledby="about-title">
+  <h1 id="about-title">Hi, I’m Mark.</h1>
 
-I write about computer science, paralegal work, and the humanities. This site is both a notebook and a portfolio. I’ve gone through several iterations of a “portfolio” over the years, first as a teacher, then as a fledgling web developer. None of them felt quite right. I always felt like I was striving too hard to impress with fancy styling which left me with a website I never felt content presenting. And at the end of the day, we're supposed to show our portfolio to people, right? 
+  <p class="lede dropcap">
+    I write about <strong>computer science</strong>, <strong>law</strong>, the
+    <strong>humanities</strong>, and anything else that piques my interest. This
+    site is part notebook, part portfolio, and a space for thinking out loud.
+  </p>
 
-This portfolio has a different goal: to show what I've been learning by allowing me a place to put down my thoughts, either as an article, or a page to showcase a project I'm particularly proud of, without all of the overwrought styling. It mimics my notetaking apps in that way. 
+  <p>
+    Over the years, I have gone through several versions of a portfolio. First
+    as a teacher to provide extra lessons for students. Then as a developer to
+    showcase my projects. None of them ever felt like me. I realized I was too
+    focused on presentation instead of purpose. I would spend hours refining
+    details and rarely publish anything meaningful.
+  </p>
 
-In a previous life, I was a teacher. I primarily taught Latin, but Ancient Greek, English, beginning French, and Logic were also wonderful courses under my belt. I’ve always enjoyed helping people make sense of complex things. It might have been a passage from Cicero or Thucydides, or a tricky bit of editing in a student’s writing to improve the flow of their argument. **Teaching taught me patience, organization, and the value of clear communication.**  
+  <div class="callout">
+    <b>I want to showcase my journey.</b> This is where I write, reflect, and
+    document what I am working on without worrying about perfection. It mirrors
+    the plain structure of my note-taking apps and keeps the focus on the ideas
+    themselves.
+  </div>
 
-After stepping away from education, I moved into web development and technical consulting. This came from an interest in automating grading, funny enough. Before AI, there wasn't a decent tool at automatically grading students Latin homework. During COVID, I took this task on and developed a rudimentary script to help grade. This allowed me a wealth of time I hadn't had before. I fell in love with the puzzle. **I learned to design systems, write clean code, and think through problems in a structured way**, complementing the language half of my brain.  
+  <h3>I began my career as a teacher.</h3>
+  <p>
+    I taught Latin, along with Ancient Greek, English, French, and Logic. I
+    enjoyed helping people make sense of complex ideas, from translating Cicero
+    to improving the clarity of a student’s essay.
+  </p>
+  <p class="beat">
+    <strong
+      >Teaching taught me patience, organization, and the value of clear
+      communication.</strong
+    >
+    Those lessons continue to shape how I approach every project.
+  </p>
 
-**Recently, I’ve been transitioning into the legal field as a paralegal.** I’m especially drawn to intellectual property, where law, language, and technology intersect. I've completed the University of San Diego’s ABA-approved paralegal program, and I’ve had the chance to complete an internship where I worked on trademark maintenance, Office action research, and IP automation projects that merge my technical background with my new legal training.  
+  <h3>Later, I turned to technology.</h3>
+  <p>
+    I became interested in automating grading and built a small program to help
+    evaluate Latin assignments. That experience opened the door to programming,
+    system design, and the creative side of problem solving.
+  </p>
+  <p class="beat">
+    <strong
+      >I learned to design systems, write clean and efficient code, and think
+      through problems in a structured way.</strong
+    >
+    That mindset connects naturally to research, analysis, and process
+    improvement in any field.
+  </p>
 
-This site is my working space. It is where I can document what I’m learning and share what I find useful along the way. Welcome!
+  <h3>Today, my work bridges law and technology.</h3>
+  <p>
+    I completed the
+    <strong>University of San Diego’s ABA-approved Paralegal Program</strong>,
+    where I studied Contract law, Business Entities, Civil Litigation, Legal
+    Research and Writing, and more. I also completed an internship focused on
+    intellectual property and legal technology projects involving trademark
+    maintenance, Office action research, and automation.
+  </p>
+  <p>
+    At the same time, I am pursuing a
+    <strong
+      >Bachelor of Science in Computer Science at Western Governors
+      University</strong
+    >, where I study software design, data structures, and automation systems.
+  </p>
+  <p class="beat">
+    <strong
+      >I am drawn to spaces where logic, language, and structure come
+      together,</strong
+    >
+    whether that is in building tools, solving legal problems, or improving the
+    way people work with information.
+  </p>
 
-**Mark**
+  <p>
+    This site is my <strong>working space</strong>. It is where I collect ideas,
+    record what I learn, and share the things I find useful along the way.
+  </p>
 
-#### *Read some of my writing [here](#/articles)*
+  <p class="muted">Thank you for visiting, and welcome to the margins.</p>
+  <p class="sig">Mark</p>
+
+  <p class="muted">
+    <em>Read some of my writing <a href="#/articles">here</a></em>
+  </p>
+</section>
