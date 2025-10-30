@@ -375,22 +375,21 @@ async function renderArticleDetail(articleId) {
       <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; flex-wrap:wrap;">
         <div>
           <h1 class="page-title" style="margin:0;">${escapeHtml(art.text)}</h1>
+          ${
+            art.summary
+              ? `<p style="margin-top:0;" class="meta">${escapeHtml(
+                  art.summary
+                )}</p>`
+              : ""
+          }
           <div class="meta" style="margin:6px 0 12px;">${
-            art.date ? escapeHtml(art.date) + " · " : ""
-          }${(art.tags || []).map(tagLink).join(" ")}</div>
-          <div class="meta">Link: <a class="link" href="#/a/${encodeURIComponent(
-            art.slug
-          )}">#/a/${escapeHtml(art.slug)}</a></div>
+            art.date ? escapeHtml(art.date) : ""
+          }</div>
         </div>
+        
         ${art.draft ? `<span class="pill">Draft</span>` : ""}
       </div>
-      ${
-        art.summary
-          ? `<p style="margin-top:0;" class="meta">${escapeHtml(
-              art.summary
-            )}</p>`
-          : ""
-      }
+      
       <div class="article-body" id="articleBody">${html}</div>
       <div style="margin-top:14px; display:flex; gap:8px; flex-wrap:wrap;">
         <button class="btn" id="copyLinkBtn" title="Copy shareable URL">Copy link</button>

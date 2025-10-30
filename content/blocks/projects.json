@@ -1,12 +1,12 @@
 [
   {
-    "text": "Single User MUD Game in JS",
-    "tags": ["javascript", "game"],
-    "children": [{ "text": "Map system and random events." }]
+    "text": "",
+    "tags": ["", ""],
+    "children": [{ "text": "" }]
   },
   {
-    "text": "Moving App with Mongoose",
-    "tags": ["node", "mongodb"],
+    "text": "",
+    "tags": ["", ""],
     "children": []
   }
 ]

@@ -78,10 +78,10 @@
 
   <p>
     This site is my <strong>working space</strong>. It is where I collect ideas,
-    record what I learn, and share the things I find useful along the way.
+    record what I learn, and share the things I find useful along the way. The site name comes from the habit of writing in the margins, the quiet spaces beside the text <strong>where ideas first begin to take shape</strong>.
   </p>
 
-  <p class="muted">Thank you for visiting, and welcome to the margins.</p>
+  <p class="muted">Thank you for visiting, and welcome to my margins.</p>
   <p class="sig">Mark</p>
 
   <p class="muted">

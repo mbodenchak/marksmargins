@@ -572,6 +572,10 @@ footer {
   padding: 6px 10px;
 }
 
+.article-body {
+  max-width: 96ch;
+  margin: auto;
+}
 .article-body code {
   padding: 0 4px;
   border-radius: 6px;
@@ -627,6 +631,8 @@ footer {
 .about {
   color: var(--text);
   line-height: 1.7;
+  max-width: 82ch;
+  margin: auto;
 }
 
 /* Headings */
