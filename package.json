@@ -1,0 +1,12 @@
+{
+  "name": "marksmargins",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "echo \"root build placeholder\"",
+    "dev": "echo \"root dev placeholder\""
+  }
+}
