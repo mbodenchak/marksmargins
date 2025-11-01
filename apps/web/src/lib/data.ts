@@ -75,3 +75,34 @@ export const getProjectBySlug = cache(
     }
   }
 );
+export async function getAllTags(): Promise<string[]> {
+  const [articles, projects] = await Promise.all([
+    getArticles(),
+    getProjects(),
+  ]);
+
+  const tagSet = new Set<string>();
+  [...articles, ...projects].forEach((item) => {
+    item.tags?.forEach((tag) => tagSet.add(tag.toLowerCase()));
+  });
+
+  return Array.from(tagSet).sort();
+}
+
+export async function getItemsByTag(tag: string) {
+  const [articles, projects] = await Promise.all([
+    getArticles(),
+    getProjects(),
+  ]);
+
+  const match = tag.toLowerCase();
+
+  return {
+    articles: articles.filter((a) =>
+      a.tags?.some((t) => t.toLowerCase() === match)
+    ),
+    projects: projects.filter((p) =>
+      p.tags?.some((t) => t.toLowerCase() === match)
+    ),
+  };
+}

@@ -15,6 +15,14 @@ export default async function ProjectsPage() {
             <h2 style={{ marginTop: 0 }}>
               <Link href={`/projects/${p.slug}`}>{p.name}</Link>
             </h2>
+            {p.tags?.length && (
+  <p className="tags">
+    {p.tags.map(t => (
+      <Link key={t} href={`/tags/${t.toLowerCase()}`}>#{t}</Link>
+    ))}
+  </p>
+)}
+
             {p.blurb && <p>{p.blurb}</p>}
             {p.tags?.length ? (
               <div style={{ fontSize: ".9rem", color: "var(--muted)" }}>
@@ -23,6 +31,7 @@ export default async function ProjectsPage() {
             ) : null}
           </li>
         ))}
+        
       </ul>
     </div>
   );

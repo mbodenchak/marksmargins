@@ -15,6 +15,14 @@ export default async function ArticlesPage() {
             <h2 style={{ marginTop: 0 }}>
               <Link href={`/articles/${a.slug}`}>{a.title}</Link>
             </h2>
+            {a.tags?.length && (
+  <p className="tags">
+    {a.tags.map(t => (
+      <Link key={t} href={`/tags/${t.toLowerCase()}`}>#{t}</Link>
+    ))}
+  </p>
+)}
+
             {a.summary && <p>{a.summary}</p>}
             <div style={{ fontSize: ".9rem", color: "var(--muted)" }}>
               {a.date && <span>{a.date}</span>}
