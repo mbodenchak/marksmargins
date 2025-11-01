@@ -1,0 +1,14 @@
+.footer {
+  border-top: 1px solid var(--note);
+  background: var(--panel);
+  margin-top: 3rem;
+}
+
+.wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem;
+  color: var(--muted);
+  font-size: 0.95rem;
+  text-align: center;
+}

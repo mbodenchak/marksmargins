@@ -1,42 +1,62 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --bg: #0f1115;
+  --bg-elev: #151922;
+  --panel: #0b0d12;
+  --text: #e6eaf2;
+  --muted: #aab3c5;
+  --accent: #8ab4f8;
+  --accent-2: #9ce6e6;
+  --note: #1b2130;
+  --ok: #8ae68a;
+  --warn: #ffd479;
 }
 
 * {
   box-sizing: border-box;
-  padding: 0;
+}
+html,
+body {
+  height: 100%;
+  background: var(--bg);
+  color: var(--text);
+}
+
+body {
   margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
+    Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  line-height: 1.6;
 }
 
 a {
-  color: inherit;
+  color: var(--accent);
   text-decoration: none;
 }
+a:hover {
+  text-decoration: underline;
+}
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 2rem;
+}
+
+.container {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--note);
+  margin: 2rem 0;
+}
+
+.card {
+  background: var(--bg-elev);
+  border: 1px solid var(--note);
+  border-radius: 12px;
+  padding: 1rem;
 }

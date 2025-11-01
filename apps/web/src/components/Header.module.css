@@ -1,0 +1,46 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: var(--bg-elev);
+  border-bottom: 1px solid var(--note);
+  backdrop-filter: blur(6px);
+}
+
+.wrap {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 0.75rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  font-weight: 700;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.link {
+  color: var(--muted);
+  text-decoration: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.5rem;
+}
+
+.link:hover {
+  color: var(--text);
+  background: var(--note);
+}
+
+.active {
+  color: var(--text);
+  background: var(--note);
+}
