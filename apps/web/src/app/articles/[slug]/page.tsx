@@ -1,25 +1,20 @@
 import Link from "next/link";
+import { getArticleBySlug } from "@/lib/data";
+import { getArticles } from "@/lib/data";
 
-type ArticleDoc = { title: string; body: string };
+export async function generateStaticParams() {
+  const items = await getArticles();
+  return items.map(a => ({ slug: a.slug }));
+}
 
-const fake: Record<string, ArticleDoc> = {
-  "hello-world": {
-    title: "Hello World",
-    body: "<p>Seed page for routing and styles. Replace with real content soon.</p>",
-  },
-  "generating-functions": {
-    title: "Generating Functions",
-    body: "<p>Coming soon. Notes, examples, and practice problems.</p>",
-  },
-};
+
+export const revalidate = 60;
 
 export default async function ArticleDetail({
   params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;          // ✅ unwrap the Promise
-  const doc = fake[slug];                 // ✅ fully typed, no warning
+}: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const doc = await getArticleBySlug(slug);
 
   if (!doc) {
     return (

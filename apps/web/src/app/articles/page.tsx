@@ -1,13 +1,11 @@
 import Link from "next/link";
+import { getArticles } from "@/lib/data";
 
-type Article = { slug: string; title: string; summary?: string; date?: string; tags?: string[] };
+export const revalidate = 60; // allow refresh once a minute
 
-const articles: Article[] = [
-  { slug: "hello-world", title: "Hello World", summary: "First post to verify layout.", date: "2025-11-01", tags: ["site"] },
-  { slug: "generating-functions", title: "Generating Functions", summary: "Study notes with examples.", date: "2025-11-01", tags: ["math"] },
-];
+export default async function ArticlesPage() {
+  const articles = await getArticles();
 
-export default function ArticlesPage() {
   return (
     <div className="container">
       <h1>Articles</h1>
@@ -20,11 +18,7 @@ export default function ArticlesPage() {
             {a.summary && <p>{a.summary}</p>}
             <div style={{ fontSize: ".9rem", color: "var(--muted)" }}>
               {a.date && <span>{a.date}</span>}
-              {a.tags && a.tags.length > 0 && (
-                <span style={{ marginLeft: ".75rem" }}>
-                  {a.tags.map(t => `#${t}`).join(" ")}
-                </span>
-              )}
+              {a.tags?.length ? <span style={{ marginLeft: ".75rem" }}>{a.tags.map(t => `#${t}`).join(" ")}</span> : null}
             </div>
           </li>
         ))}

@@ -1,0 +1,8 @@
+{
+  "slug": "hello-world",
+  "title": "Hello World",
+  "summary": "First post to verify layout.",
+  "date": "2025-11-01",
+  "tags": ["site"],
+  "body": "<p>Seed page for routing and styles. Replace with real content soon.</p>"
+}

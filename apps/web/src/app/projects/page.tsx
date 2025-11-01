@@ -1,13 +1,11 @@
 import Link from "next/link";
+import { getProjects } from "@/lib/data";
 
-type Project = { slug: string; name: string; blurb?: string; tags?: string[] };
+export const revalidate = 60;
 
-const projects: Project[] = [
-  { slug: "trademark-maintenance", name: "Trademark Maintenance App", blurb: "Schedule tracking and reminders.", tags: ["law", "automation"] },
-  { slug: "resume-json-renderer", name: "Resume JSON Renderer", blurb: "Renders resume sections from JSON.", tags: ["web"] },
-];
+export default async function ProjectsPage() {
+  const projects = await getProjects();
 
-export default function ProjectsPage() {
   return (
     <div className="container">
       <h1>Projects</h1>
@@ -18,11 +16,11 @@ export default function ProjectsPage() {
               <Link href={`/projects/${p.slug}`}>{p.name}</Link>
             </h2>
             {p.blurb && <p>{p.blurb}</p>}
-            {p.tags && p.tags.length > 0 && (
+            {p.tags?.length ? (
               <div style={{ fontSize: ".9rem", color: "var(--muted)" }}>
                 {p.tags.map(t => `#${t}`).join(" ")}
               </div>
-            )}
+            ) : null}
           </li>
         ))}
       </ul>

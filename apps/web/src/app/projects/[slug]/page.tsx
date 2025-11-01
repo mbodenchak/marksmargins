@@ -1,24 +1,21 @@
 import Link from "next/link";
+import { getProjectBySlug } from "@/lib/data";
+import { getProjects } from "@/lib/data";
 
-type ProjectDoc = { name: string; body: string };
-const fake: Record<string, ProjectDoc> = {
-  "trademark-maintenance": {
-    name: "Trademark Maintenance App",
-    body: "<p>Tracks Section 8, 9, 15, and 71 deadlines and sends reminders.</p>",
-  },
-  "resume-json-renderer": {
-    name: "Resume JSON Renderer",
-    body: "<p>Renders resume sections from a JSON schema. Drives site resume page.</p>",
-  },
-};
+export async function generateStaticParams() {
+  const items = await getProjects();
+  return items.map(p => ({ slug: p.slug }));
+}
+
+
+
+export const revalidate = 60;
 
 export default async function ProjectDetail({
   params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;          // ⬅️ unwrap the Promise
-  const doc = fake[slug];
+}: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const doc = await getProjectBySlug(slug);
 
   if (!doc) {
     return (
