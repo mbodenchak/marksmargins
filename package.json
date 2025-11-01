@@ -3,10 +3,12 @@
   "private": true,
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "apps/web"
   ],
   "scripts": {
     "build": "echo \"root build placeholder\"",
-    "dev": "echo \"root dev placeholder\""
+    "dev": "echo \"root dev placeholder\"",
+    "web:dev": "npm --workspace=apps/web run dev"
   }
 }
