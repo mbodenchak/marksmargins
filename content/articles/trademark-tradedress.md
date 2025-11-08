@@ -1,0 +1,15 @@
+Trademark law reaches beyond words and logos. It can protect the overall look of a product or its packaging when that appearance identifies the source. This broader category is called trade dress. Understanding how it differs from traditional trademarks helps explain why some designs qualify for protection while others remain free for everyone.
+
+A trademark is any symbol, word, or design that distinguishes one seller’s goods from another’s. Trade dress, in contrast, refers to the total image or appearance of a product. It might include size, shape, color, texture, or even the layout of a store. Classic examples include the Coca-Cola bottle and the décor of fast-food chains. The goal is the same as trademarks—to prevent consumer confusion—but the path to protection is narrower.
+
+Trade dress must be distinctive and nonfunctional. Distinctiveness means consumers recognize the appearance as identifying a particular source. Nonfunctionality means the feature does not affect the product’s use, cost, or performance. If it does, it cannot be protected. The reason is simple. Function belongs to patent law, not trademark law. Granting exclusive rights in a functional feature would unfairly block competition.
+
+The Supreme Court case Two Pesos v. Taco Cabana confirmed that inherently distinctive restaurant décor could qualify for protection without proof of secondary meaning. But in Wal-Mart v. Samara Brothers, the Court drew a different line for product design, holding that design is never inherently distinctive. Product designs always require evidence that consumers associate the design with a single source. That rule remains central today.
+
+Functionality limits trade dress even further. In TrafFix Devices v. Marketing Displays, the Court ruled that a dual-spring mechanism for traffic signs was functional and therefore not protectable as trade dress. The feature made the product work better, and competitors needed to use it. The decision emphasized that trademark law cannot be used to extend expired patents or monopolize useful designs.
+
+In practice, trade dress claims are powerful but risky. They require detailed evidence, often surveys showing consumer recognition. Many fail because the features claimed turn out to be functional or purely aesthetic. Yet when successful, trade dress can become a lasting form of brand identity. The shape of the Hershey’s Kiss or the contour of the Coca-Cola bottle are so familiar that they instantly signal origin, even without a word.
+
+For paralegals, trade dress matters because it changes how evidence is gathered. Photographs, design drawings, and marketing materials all become part of the record. Descriptions must be specific but not so narrow that competitors can easily design around them. It is a balancing act that mirrors the line between creativity and competition.
+
+Trade dress shows the flexibility of trademark law. It reminds us that branding does not always live in words. Sometimes it lives in the curves of a bottle, the color of a wrapper, or the layout of a store. Those elements can carry as much identity as any logo when consumers learn to see them as symbols of source.

@@ -1,8 +1,120 @@
 [
   {
+    "slug": "what-is-copyright-protection",
+    "title": "What Copyright Protects and What It Does Not",
+    "date": "2025-08-29",
+    "tags": ["ip", "copyright", "protection"],
+    "summary": "Copyright protects the expression of ideas, not the ideas themselves.",
+    "draft": false
+  },
+  {
+    "slug": "trademark-copyright-patents",
+    "title": "Trademark, Copyright, and Patent: How They Differ and Overlap",
+    "date": "2025-09-01",
+    "tags": ["ip", "copyright", "trademark", "patent"],
+    "summary": "Intellectual property protects different types of creativity and innovation through separate but complementary systems.",
+    "draft": false
+  },
+  {
+    "slug": "patent-basics-utility-design-plant-patents-explained",
+    "title": "Patent Basics: Utility, Design, and Plant Patents Explained.",
+    "date": "2025-09-04",
+    "tags": [
+      "ip",
+      "patents",
+      "utility patents",
+      "design patents",
+      "plant patents"
+    ],
+    "summary": "Patents grant inventors exclusive rights to their creations, but not all patents protect the same things. This overview breaks down the differences between utility, design, and plant patents and when each type applies.",
+    "draft": false
+  },
+  {
+    "slug": "trademark-lifecycle",
+    "title": "The Life Cycle of a U.S. Trademark: From Application to Renewal",
+    "date": "2025-09-07",
+    "tags": ["ip", "trademark", "application", "lifecycle"],
+    "summary": "A trademark’s protection begins long before registration and continues through diligent maintenance. This article walks through the stages of application, registration, and renewal, including key USPTO filings such as Sections 8, 9, 15, and 71.",
+    "draft": false
+  },
+  {
+    "slug": "copyright-registration",
+    "title": "The Anatomy of a Copyright Registration",
+    "date": "2025-09-10",
+    "tags": ["ip", "copyright", "registration", "lifecycle"],
+    "summary": "While copyright exists automatically upon creation, registration unlocks vital enforcement benefits. This piece outlines the registration process with the U.S. Copyright Office.",
+    "draft": false
+  },
+  {
+    "slug": "patent-prosecution",
+    "title": "From Idea to Patent: The Prosecution Process at the USPTO",
+    "date": "2025-09-13",
+    "tags": ["ip", "patent", "prosecution process", "USPTO"],
+    "summary": "Turning an invention into a granted patent requires patience and precision. This summary demystifies the patent prosecution process, from initial filing and examination to responding to office actions and receiving a Notice of Allowance.",
+    "draft": false
+  },
+  {
+    "slug": "trademark-application",
+    "title": "How the USPTO Examines a Trademark Application",
+    "date": "2025-09-16",
+    "tags": ["ip", "trademark", "application process", "USPTO"],
+    "summary": "How do trademark examiners apply Section 2(d) (likelihood of confusion), descriptiveness, and specimen requirements during review?",
+    "draft": false
+  },
+  {
+    "slug": "novelty-nonobviousness",
+    "title": "Novelty and Non-Obviousness: The Crux of Patentability",
+    "date": "2025-09-19",
+    "tags": ["ip", "patents", "novelty", "non-obviousness", "patentability"],
+    "summary": "Patent law rewards new and inventive contributions, but not trivial ones. What are the core requirements of novelty and non-obviousness?",
+    "draft": false
+  },
+  {
+    "slug": "trademark-tradedress",
+    "title": "Trademark vs. Trade Dress: Protecting More Than Just a Name",
+    "date": "2025-09-28",
+    "tags": ["ip", "trademark", "trade dress"],
+    "summary": "Trade dress extends trademark protection to the look and feel of a product or its packaging, but it's protection is complicated by 'functionality'",
+    "draft": false
+  },
+  {
+    "slug": "policing-maintaining-trademark",
+    "title": "Policing and Maintaining a Trademark: Why Monitoring Matters",
+    "date": "2025-10-02",
+    "tags": ["ip", "trademark", "maintenance", "policing"],
+    "summary": "Protection over a mark can fade without proper maintenance. Genericide is one of several threats to your protection that routine monitoring can prevent.",
+    "draft": false
+  },
+  {
+    "slug": "copyright-protection-renewal",
+    "title": "Copyright Duration and Renewal: How Long Protection Lasts",
+    "date": "2025-10-06",
+    "tags": ["ip", "copyright", "renewal", "duration"],
+    "summary": "How long will your copyright last, and what are the factors that limit its duration?",
+    "draft": false
+  },
+  {
+    "slug": "international-ip-protection",
+    "title": "International IP Protection: Madrid, Berne, and the PCT in Plain English",
+    "date": "2025-10-10",
+    "tags": [
+      "ip",
+      "copyright",
+      "trademark",
+      "patent",
+      "international protection",
+      "Madrid",
+      "Berne",
+      "PCT"
+    ],
+    "summary": "Protecting your IP domestically isn't enough sometimes. Special rules and conventions dictate how to go about protecting your property in international markets.",
+    "draft": false
+  },
+
+  {
     "slug": "why-distinctiveness-matters",
     "title": "Why Distinctiveness Matters in Trademark Law.",
-    "date": "2025-09-26",
+    "date": "2025-11-01",
     "tags": ["ip", "trademark", "distinctiveness", "genericide"],
     "summary": "What do we mean when we talk about distinctiveness in trademarks, and why is it so important?",
     "draft": false
@@ -10,7 +122,7 @@
   {
     "slug": "generative-ai-and-copyright",
     "title": "Legal Landscape in Turmoil: Generative AI and Copyright Infringement.",
-    "date": "2025-08-25",
+    "date": "2025-11-05",
     "tags": [
       "ip",
       "copyright",
@@ -25,7 +137,7 @@
   {
     "slug": "nontraditional-marks",
     "title": "What’s that Smell? Understanding Nontraditional Trademarks in the U.S.",
-    "date": "2025-08-19",
+    "date": "2025-11-08",
     "tags": [
       "nontraditional trademarks",
       "scent",
@@ -40,7 +152,7 @@
   {
     "slug": "new-test-article",
     "title": "Article post to test uploading a new .md file and seeing if it auto updates on deploy.",
-    "date": "2025-08-01",
+    "date": "2025-08-05",
     "tags": ["development", "website", "code", "design"],
     "summary": "What counts as a nontraditional mark and why functionality and distinctiveness matter.",
     "draft": false
@@ -48,7 +160,7 @@
   {
     "slug": "markdown-showcase",
     "title": "Markdown Showcase: A Living Demo",
-    "date": "2025-07-28",
+    "date": "2025-08-01",
     "tags": ["demo", "markdown", "guide"],
     "summary": "A compact article that demonstrates headings, emphasis, links, lists, code blocks, and site-specific wiki links.",
     "draft": false
